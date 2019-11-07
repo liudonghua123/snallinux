@@ -1,0 +1,23 @@
+#!/bin/bash
+
+FLOOR=45
+RANGE=180
+
+if [ "$*" == "" ] ; then
+	run="date"
+else
+	run=$*
+fi
+
+
+while [ true ] ; do
+	$run
+	number=0
+	while [ "$number" -le $FLOOR ] ; do
+		number=$RANDOM
+		let "number %= $RANGE"
+	done
+	echo -n sleeping for $number seconds
+	sleep $number
+	echo ""
+done

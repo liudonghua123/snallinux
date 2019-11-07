@@ -1,0 +1,15 @@
+startup_message off
+vbell on
+activity '^GActivity in window %'
+
+hardstatus alwayslastline
+hardstatus string '%{= dd}%c %06=%-Lw%40L>%{+b}%n*%f%t%{-}%+Lw%<'
+
+blankerprg tty-clock -cs 
+idle 300
+defscrollback 5000
+
+bind o blanker
+
+screen -t bash		2	~/.bin/runloop
+screen -t bash		1	~/.bin/runmain

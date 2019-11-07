@@ -1,0 +1,38 @@
+#!/bin/bash
+
+numtries=99
+waittime=1
+options=0
+
+# if options are passed, parse them
+while [[ $1 =~ - ]] ; do
+	case $1 in 
+		-n)	numtries=$2 ; shift 2 ;;
+		-w) waittime=$2 ; shift 2 ;;
+		*) echo "option $1 not recognized" ; exit 1
+	esac
+done
+
+#echo "numtries $numtries, waittime $waittime"
+
+# if there's an issue with the command, print usage
+if [ "$*" == "" ] ; then
+	echo "Usage: tildone [-n numtries] [-w waittime] [command to run]"
+	exit 1
+fi
+
+run=$*
+status=1
+tries=1
+
+while [[ $status -ne 0 ]] && [[ $tries -le $numtries ]] ; do
+	$run
+	status=$?
+	tries=$(($tries+1))
+	if [[ $status -ne 0 ]] && [[ $tries -le $numtries ]] ; then
+		echo -n "tildone sleeping $waittime . . . "
+		sleep $waittime
+		echo "try $tries/$numtries"
+	fi
+done
+exit $status

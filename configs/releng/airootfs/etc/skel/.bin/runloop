@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$*" == "" ] ; then
+	run="bash"
+else
+	run=$*
+fi
+
+
+while [ true ] ; do
+	clear
+	echo Press Enter to Activate
+	read x
+	$run
+done

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+bell=0
+pause=0
+options=0
+
+# if there's an issue with the command, print usage
+if [ "$*" == "" ] ; then
+	echo "Usage: tilup [-bp] [host to ping] <host to ping> <host to ping> .."
+	exit 1
+else
+
+	# if options are passed, parse them
+	if [[  $1 =~ - ]] ; then
+		if [[ $1 =~ b ]] ; then
+			bell=1
+		fi
+		if [[ $1 =~ p ]] ; then
+			pause=1
+		fi
+		shift
+	fi
+fi
+
+list=0
+while [ "$1" != "" ] ; do
+	# parse address or hostname to ping
+	ping=$1
+	shift
+	ipup=0
+	while [ "$ipup" -eq "0" ] ; do
+		ping -w 2 $ping && ipup=1
+		sleep 1
+	done
+done
+
+# if we should pause, pause
+if [ "$pause" == "1" ] ; then
+	echo sleeping for 10 seconds . . .
+	sleep 10
+fi
+# if we should bell, bell
+if [ "$bell" == "1" ] ; then
+	~/.bin/bell
+fi

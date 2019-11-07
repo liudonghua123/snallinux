@@ -1,0 +1,9 @@
+set show-all-if-ambiguous on
+set completion-query-items 10000
+set visible-stats on
+set match-hidden-files off
+
+C-p: history-search-backward
+C-n: history-search-forward
+"\e[4~": end-of-line
+"\e[1~": beginning-of-line
