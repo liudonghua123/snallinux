@@ -12,7 +12,12 @@ cp -aT /etc/skel/ /root/
 chmod 700 /root
 
 useradd -m snal
+gpasswd -a snal users
+gpasswd -a snal wheel
+gpasswd -a snal audio
+gpasswd -a snal video
 cp -aT /etc/skel/ /home/snal/
+chown -R snal:users /home/snal
 chmod 700 /home/snal
 
 sed -i 's/#\(PermitRootLogin \).\+/\1yes/' /etc/ssh/sshd_config
