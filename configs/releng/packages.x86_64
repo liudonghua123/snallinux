@@ -33,6 +33,7 @@ dnsutils
 dos2unix
 dosbox
 dosfstools
+dstat
 elinks
 ethtool
 etherape
@@ -56,6 +57,7 @@ i3-gaps
 i3lock
 i3status
 id3v2
+iftop
 inetutils
 ipcalc
 iperf
@@ -94,6 +96,7 @@ mupdf
 nano
 ndisc6
 netctl
+nethogs
 nfs-utils
 ngrep
 nilfs-utils
@@ -130,6 +133,7 @@ smartmontools
 sonata
 sudo
 sxiv
+sysstat
 tcpdump
 termite
 testdisk
@@ -144,7 +148,7 @@ usb_modeswitch
 usbutils
 vi
 vim
-vim-minimal
+vnstat
 vpnc
 wget
 whois
