@@ -10,6 +10,7 @@ bash-completion
 bc
 bind-tools
 bitlbee
+bmon
 broadcom-wl
 btrfs-progs
 catdoc
@@ -17,6 +18,7 @@ chrony
 clonezilla
 clusterssh
 crda
+curl
 darkhttpd
 ddrescue
 dhclient
@@ -33,6 +35,7 @@ dosbox
 dosfstools
 elinks
 ethtool
+etherape
 exfat-utils
 f2fs-tools
 feh
@@ -54,7 +57,11 @@ i3lock
 i3status
 id3v2
 inetutils
+ipcalc
+iperf
+iperf3
 iptraf-ng
+iputils
 ipw2100-fw
 ipw2200-fw
 irssi
@@ -97,6 +104,7 @@ ntp
 openconnect
 openssh
 openvpn
+p0f
 p7zip
 partclone
 parted
