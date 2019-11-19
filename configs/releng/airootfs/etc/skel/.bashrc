@@ -27,7 +27,7 @@ export HISTFILESIZE=10000
 export HISTIGNORE="&:bg:fg:la:ll:lla:llp:llap:ls:exit:exit *:h"
 export HISTSIZE=10000
 export MAILCHECK=1
-export PATH="/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+export PATH="~/.bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
 #export PS1="\[$NC\]\u@\h(\[$RED\]\W\[$NC\])\\$ "
 export PS1='$( code="$?" ; if [ "$code" -ne "0" ] ; then echo -n "\[$red\]$code " ; fi)$( echo -n \[$NC\] )\u@\h($( echo -n \[$RED\] )\W$( echo -n \[$NC\] ))\$$( echo -n \[$NC\] ) '
 

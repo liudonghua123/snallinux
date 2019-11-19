@@ -10,6 +10,7 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 usermod -s /bin/bash root
 cp -aT /etc/skel/ /root/
 chmod 700 /root
+echo "root:root" | chpasswd
 
 useradd -m snal
 gpasswd -a snal users
@@ -19,6 +20,7 @@ gpasswd -a snal video
 cp -aT /etc/skel/ /home/snal/
 chown -R snal:users /home/snal
 chmod 700 /home/snal
+echo "snal:snal" | chpasswd
 
 sed -i 's/#\(PermitRootLogin \).\+/\1yes/' /etc/ssh/sshd_config
 sed -i "s/#Server/Server/g" /etc/pacman.d/mirrorlist
