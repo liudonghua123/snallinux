@@ -23,7 +23,7 @@ bindsym $mod+Return exec termite -t termite -e "bash -l"
 #bindsym $mod+Return exec xterm -fa "andale" -rv -ls
 
 # start launcher
-bindsym $mod+Shift+Return exec launcher
+bindsym $mod+Shift+Return exec ~/.bin/launcher
 #bindsym $mod+Shift+Return exec termite -t launcher -c ~/.config/termite/alt.config
 for_window [title="^launcher$"] floating enable
 

@@ -37,6 +37,8 @@ dstat
 elinks
 ethtool
 etherape
+ettercap
+ettercap-gtk
 exfat-utils
 f2fs-tools
 feh
@@ -70,6 +72,7 @@ irssi
 iw
 iwd
 jfsutils
+kismet
 lftp
 links
 linux-atm

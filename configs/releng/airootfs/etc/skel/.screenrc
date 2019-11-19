@@ -11,5 +11,5 @@ defscrollback 5000
 
 bind o blanker
 
-screen -t bash		2	~/.bin/runloop
-screen -t bash		1	~/.bin/runmain
+screen -t bash		2	#runloop
+screen -t main		1	#runmain
