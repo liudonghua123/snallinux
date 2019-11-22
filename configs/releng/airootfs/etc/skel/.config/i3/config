@@ -30,7 +30,7 @@ for_window [title="^launcher$"] floating enable
 # start rofi program launcher
 bindsym $mod+d exec rofi -show run
 
-# start browser
+# start firefox
 bindsym $mod+z exec firefox
 
 # start inkscape 
@@ -41,6 +41,9 @@ bindsym $mod+o exec libreoffice
 
 # start calibre
 bindsym $mod+c exec calibre
+
+# start pcmanfm
+bindsym $mod+x exec pcmanfm
 
 # cssh and ctel windows should float
 for_window [title="CSSH"] floating enable

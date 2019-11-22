@@ -25,6 +25,7 @@ dhclient
 dhcpcd
 dialog
 diffutils
+dillo
 dmenu
 dmraid
 dnsmasq
@@ -115,12 +116,14 @@ p7zip
 partclone
 parted
 partimage
+pcmanfm
 perl-math-round
 pkgfile
 ppp
 pptpclient
 qiv
 ranger
+rdesktop
 refind-efi
 reiserfsprogs
 ristretto
@@ -151,6 +154,7 @@ usb_modeswitch
 usbutils
 vi
 vim
+vncviewer
 vnstat
 vpnc
 wget
