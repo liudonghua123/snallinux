@@ -145,6 +145,7 @@ termite
 testdisk
 thunar
 thunar-volman
+tigervnc
 tty-clock
 tumbler
 unison
@@ -154,7 +155,6 @@ usb_modeswitch
 usbutils
 vi
 vim
-vncviewer
 vnstat
 vpnc
 wget
