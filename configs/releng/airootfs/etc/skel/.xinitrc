@@ -1,2 +1,2 @@
-feh --bg-max snal_background.png --image-bg black
+feh --bg-max .snal_background.png --image-bg black
 i3
