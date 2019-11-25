@@ -1,0 +1,18 @@
+Welcome to Snal Linux
+Simple Networked and Live
+
+Snal is based on Arch linux (https://www.archlinux.org), the i3 window manager (https://i3wm.org), and Firefox web browser (https://www.mozilla.org).
+
+When Snal boots, user snal is logged in automatically. The user is asked if she wants to run startx. The options are as follows:
+
+y					yes (run startx)
+n					no (run bash)
+s					screen (run gnu screen)
+x					screen -x (attach to existing screen session)
+
+The default is to run startx, which will start XWindows with i3 as the window manager.
+
+Normal user is		snal password snal
+Admin user is		root password root
+
+To shutdown			sudo halt -p

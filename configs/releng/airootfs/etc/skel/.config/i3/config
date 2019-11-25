@@ -2,6 +2,12 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# set background
+exec feh --bg-max .snal_background.png --image-bg black
+
+# start screenlocker
+exec xautolock -time 30 -locker i3lock -i ~/.snal_lock.png
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -62,10 +68,6 @@ bindsym $mod+Shift+BackSpace exec i3-msg exit
 
 # lock
 bindsym $mod+p exec i3lock -i ~/.snal_lock.png 
-
-
-# start screenlocker
-exec xautolock -time 30 -locker i3lock -i ~/.snal_lock.png
 
 # change focus
 bindsym $mod+h focus left
