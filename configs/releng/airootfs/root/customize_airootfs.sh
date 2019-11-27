@@ -21,7 +21,7 @@ cp -aT /etc/skel/ /home/snal/
 sed -i "s/#runroot/\/home\/snal\/.bin\/runroot/" /home/snal/.screenrc
 sed -i "s/#runweb/\/home\/snal\/.bin\/runweb/" /home/snal/.screenrc
 sed -i "s/#runirssi/\/home\/snal\/.bin\/runirssi/" /home/snal/.screenrc
-sed -i "s/#runbash/\/home\/snal\/.bin\/runbash/" /home/snal/.screenrc
+sed -i "s/#runloop/\/home\/snal\/.bin\/runloop/" /home/snal/.screenrc
 sed -i "s/#runmain/\/home\/snal\/.bin\/runmain/" /home/snal/.screenrc
 chown -R snal:users /home/snal
 chmod 700 /home/snal
