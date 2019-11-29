@@ -1,7 +1,7 @@
 Welcome to Snal Linux
 Simple Networked and Live
 
-Snal is based on Arch linux (https://www.archlinux.org), the i3 window manager (https://i3wm.org), and Firefox web browser (https://www.mozilla.org).
+Snal is based on Arch linux (https://www.archlinux.org), the i3 window manager (https://i3wm.org), and Firefox web browser (https://www.mozilla.org). It is intended to be used as a live USB image to troubleshoot hard disk, system, and network problems.
 
 
 After bootup
@@ -12,12 +12,18 @@ Entering "n" will run the standard command line user interface. In Snal, bash is
 Entering "s" will run gnu screen, which is a terminal multiplexer.
 Entering "x" will run gnu screen, attempting to connect to an existing screen session.
 
+xfce is also available. To use xfce, edit /home/snal/.xinitrc to exec startxfce4 instead of i3.
+
 
 Login information
-The normal user is snal. The initial password snal. Change it by running passwd.
+The normal user is snal. The initial password is snal. Change it by running passwd.
 The root password is root. Change it by running passwd as root.
 
 
 Networking
 To join a wireless network, run wifi-menu as root.
 Wired networks can be configured by creating netctl profiles in /etc/netctl.
+
+
+Installing
+Since Snal is built using the Archiso scripts, you can install Arch from a running Snal. The Arch installation file is located at /root/install.txt.
