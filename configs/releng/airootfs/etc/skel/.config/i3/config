@@ -6,7 +6,7 @@
 exec feh --bg-max .snal_background.png --image-bg black
 
 # start screenlocker
-exec xautolock -time 30 -locker i3lock -i ~/.snal_lock.png
+exec xautolock -time 30 -locker ~/.bin/locker
 
 set $mod Mod4
 

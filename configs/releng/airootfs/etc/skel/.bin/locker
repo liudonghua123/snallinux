@@ -1,0 +1,9 @@
+#!/bin/bash
+
+snal_lock="~/.snal_lock.png"
+
+if [ -r $snal_lock ] ; then
+	i3lock -i $snal_lock
+else
+	i3lock
+fi
