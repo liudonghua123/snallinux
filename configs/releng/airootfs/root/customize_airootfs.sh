@@ -2,6 +2,8 @@
 
 set -e -u
 
+BUILD="0.3"
+
 sed -i 's/#\(en_US\.UTF-8\)/\1/' /etc/locale.gen
 locale-gen
 
@@ -36,6 +38,20 @@ sed -i 's/#\(Storage=\)auto/\1volatile/' /etc/systemd/journald.conf
 sed -i 's/#\(HandleSuspendKey=\)suspend/\1ignore/' /etc/systemd/logind.conf
 sed -i 's/#\(HandleHibernateKey=\)hibernate/\1ignore/' /etc/systemd/logind.conf
 sed -i 's/#\(HandleLidSwitch=\)suspend/\1ignore/' /etc/systemd/logind.conf
+
+cat <<- EOF > /etc/os-release
+NAME="Snal Linux"
+PRETTY_NAME="Snal Linux"
+ID=snal
+BUILD_ID="$BUILD"
+ANSI_COLOR="0;36"
+HOME_URL="https://sourceforge.net/projects/snallinux/"
+DOCUMENTATION_URL="https://sourceforge.net/p/snallinux/wiki/Home/"
+SUPPORT_URL="https://sourceforge.net/p/snallinux/wiki/Home/"
+LOGO=snallinux
+EOF
+
+cat $BUILD > /etc/snal-release
 
 systemctl enable pacman-init.service choose-mirror.service
 systemctl set-default multi-user.target
