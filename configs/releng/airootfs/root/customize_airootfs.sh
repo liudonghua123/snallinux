@@ -51,7 +51,7 @@ SUPPORT_URL="https://sourceforge.net/p/snallinux/wiki/Home/"
 LOGO=snallinux
 EOF
 
-cat $BUILD > /etc/snal-release
+echo $BUILD > /etc/snal-release
 
 systemctl enable pacman-init.service choose-mirror.service
 systemctl set-default multi-user.target
