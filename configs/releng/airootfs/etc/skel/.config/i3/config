@@ -6,7 +6,7 @@
 exec feh --bg-max .snal_background.png --image-bg black
 
 # start screenlocker
-exec xautolock -time 30 -locker ~/.bin/locker
+exec xautolock -locker ~/.bin/locker
 
 set $mod Mod4
 
@@ -67,7 +67,7 @@ bindsym $mod+BackSpace reload
 bindsym $mod+Shift+BackSpace exec i3-msg exit
 
 # lock
-bindsym $mod+p exec i3lock -i ~/.snal_lock.png 
+bindsym $mod+p exec ~/.bin/locker
 
 # change focus
 bindsym $mod+h focus left
