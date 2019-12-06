@@ -1,7 +1,19 @@
 Welcome to Snal Linux
 Simple Networked and Live
 
-Snal is based on Arch linux (https://www.archlinux.org), the i3 window manager (https://i3wm.org), and Firefox web browser (https://www.mozilla.org). It is intended to be used as a live USB image to troubleshoot hard disk, system, and network problems.
+Snal is based on Arch linux <https://www.archlinux.org>, the i3 window manager <https://i3wm.org>, and Firefox web browser <https://www.mozilla.org>. It is intended to be used as a live USB image to troubleshoot hard disk, system, and network problems.
+
+
+Current Release
+Snal 0.3 is the latest release. It was released on December 2, 2019. It is available for download at <https://sourceforge.net/projects/snallinux/files/snallinux-0.3.iso/download>
+
+
+Burning a DVD
+The Snal ISO can be burned to a DVD using standard software. As of release 0.3, the Snal image is approximately 1.3 GB.
+
+
+Copying to USB
+The Snal ISO can also be transferred directly to a USB drive using dd or similar software. See <https://wiki.archlinux.org/index.php/USB_flash_installation_media> for more information.
 
 
 After bootup
@@ -12,10 +24,26 @@ Entering "n" will run the standard command line user interface. In Snal, bash is
 Entering "s" will run gnu screen, which is a terminal multiplexer.
 Entering "x" will run gnu screen, attempting to connect to an existing screen session.
 
-xfce is also available. To use xfce, edit /home/snal/.xinitrc to exec startxfce4 instead of i3.
+xfce is also available. To use xfce, do not start XWindows, edit /home/snal/.xinitrc to exec startxfce4 instead of i3, then start XWindows.
 
 
-Login information
+Graphical Interface
+The default Snal interface is the i3 window manager. Key bindings are shown on the background image and can be changed by editing /home/snal/.config/i3/config.
+
+More information on the i3 window manager is available at <https://i3wm.org>.
+
+A terminal emulator can be opened using super+enter. By default, the termite terminal emulator will ask to run GNU Screen on startup. This behavior can be changed by editing /home/snal/.bash_profile.
+
+To see what other applications are available, press super+d to run rofi, which is a program launcher.
+
+
+Command Line Interface
+Snal features the GNU Screen terminal multiplexer. Screen keybindings consist of control+a followed by one additional character. For example, to detach screen from the terminal where it is running, press control+a control+d. These settings can be changed by editing /home/snal/.screenrc.
+
+More information on GNU Screen is available at <https://wiki.archlinux.org/index.php/GNU_Screen>.
+
+
+Login Information
 The normal user is snal. The initial password is snal. Change it by running passwd.
 The root password is root. Change it by running passwd as root.
 
@@ -23,6 +51,8 @@ The root password is root. Change it by running passwd as root.
 Networking
 To join a wireless network, run wifi-menu as root.
 Wired networks can be configured by creating netctl profiles in /etc/netctl.
+
+More information about netctl is available at <https://wiki.archlinux.org/index.php/Netctl>.
 
 
 Installing
