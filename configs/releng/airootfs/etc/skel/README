@@ -5,11 +5,13 @@ Snal is based on Arch linux <https://www.archlinux.org>, the i3 window manager <
 
 
 Current Release
+This is a release candidate for Snal 0.4.
+
 Snal 0.3 is the latest release. It was released on December 2, 2019. It is available for download at <https://sourceforge.net/projects/snallinux/files/snallinux-0.3.iso/download>
 
 
 Burning a DVD
-The Snal ISO can be burned to a DVD using standard software. As of release 0.3, the Snal image is approximately 1.3 GB.
+The Snal ISO can be burned to a DVD using standard software. As of release 0.4, the Snal image is approximately 1.3 GB.
 
 
 Copying to USB
