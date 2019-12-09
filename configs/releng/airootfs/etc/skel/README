@@ -22,9 +22,9 @@ After bootup
 After Snal boots, user snal is logged in automatically. The user is asked if she wants to run startx. Pressing enter will run the default: starting XWindows with i3 as the window manager. The options are as follows:
 
 Entering "y" or just pressing enter will run startx with i3 as the window manager.
-Entering "n" will run the standard command line user interface. In Snal, bash is the default shell.
-Entering "s" will run gnu screen, which is a terminal multiplexer.
-Entering "x" will run gnu screen, attempting to connect to an existing screen session.
+Entering "n" will run a bash shell.
+Entering "s" will attach an existing screen session or start a new one.
+Entering "x" will join an existing screen session.
 
 xfce is also available. To use xfce, do not start XWindows, edit /home/snal/.xinitrc to exec startxfce4 instead of i3, then start XWindows.
 
@@ -34,13 +34,17 @@ The default Snal interface is the i3 window manager. Key bindings are shown on t
 
 More information on the i3 window manager is available at <https://i3wm.org>.
 
-A terminal emulator can be opened using super+enter. By default, the termite terminal emulator will ask to run GNU Screen on startup. This behavior can be changed by editing /home/snal/.bash_profile.
-
-To see what other applications are available, press super+d to run rofi, which is a program launcher.
+A terminal emulator can be opened using super+enter. To see what other applications are available, press super+d to run rofi, which is a program launcher.
 
 
 Command Line Interface
-Snal features the GNU Screen terminal multiplexer. Screen keybindings consist of control+a followed by one additional character. For example, to detach screen from the terminal where it is running, press control+a control+d. These settings can be changed by editing /home/snal/.screenrc.
+Snal features the GNU Screen terminal multiplexer. When a new terminal is opened, the user is asked if she wants to run screen. Pressing enter will run the default: attach or start. If a screen session exists, attach it here. If a screen session doesn't exist, start a new session. The options are as follows:
+
+Entering "y" or just pressing enter will attach an existing screen session or start a new one.
+Entering "n" will run a bash shell. 
+Entering "x" will join an existing screen session.
+
+Keybindings in GNU Screen consist of control+a followed by one additional character. For example, to detach screen from the terminal where it is running, press control+a control+d. These settings can be changed by editing /home/snal/.screenrc.
 
 More information on GNU Screen is available at <https://wiki.archlinux.org/index.php/GNU_Screen>.
 

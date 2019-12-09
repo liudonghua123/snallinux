@@ -1,7 +1,6 @@
 alsa-lib
 alsa-plugins
 alsa-utils
-angband
 arandr
 arch-install-scripts
 arch-wiki-lite
@@ -145,11 +144,8 @@ sysstat
 tcpdump
 termite
 testdisk
-thunar
-thunar-volman
 tigervnc
 tty-clock
-tumbler
 unison
 unrar
 unzip
