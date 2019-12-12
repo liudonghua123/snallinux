@@ -15,8 +15,7 @@ The Snal ISO can be burned to a DVD using standard software. The Snal image is a
 
 
 Copying to USB
-The Snal ISO can also be transferred directly to a USB drive using dd or similar software. See <https://wiki.archlinux.org/index.php/USB_flash_installation_media> for more information.
-The minimum size of the USB is 2GB. Once the image is transferred to a USB drive, the second partition can be expanded or replaced to make use of additional space on the drive.
+The Snal ISO can also be transferred directly to a USB drive (at least 2 GB) using dd or similar software. See <https://wiki.archlinux.org/index.php/USB_flash_installation_media> for more information.
 
 
 After bootup
