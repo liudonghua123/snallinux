@@ -155,8 +155,10 @@ vi
 vim
 vnstat
 vpnc
+webfs
 wget
 whois
+wipe
 wireless-regdb
 wireless_tools
 wireshark-cli
@@ -167,6 +169,8 @@ xfce4
 xfce4-goodies
 xfsprogs
 xl2tpd
+xorg-fonts-100dpi
+xorg-fonts-75dpi
 xorg-server
 xorg-xcalc
 xorg-xclock
