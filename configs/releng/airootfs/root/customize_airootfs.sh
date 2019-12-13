@@ -2,7 +2,7 @@
 
 set -e -u
 
-BUILD="0.4"
+BUILD="XXVERXX"
 
 sed -i 's/#\(en_US\.UTF-8\)/\1/' /etc/locale.gen
 locale-gen

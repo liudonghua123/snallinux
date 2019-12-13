@@ -1,8 +1,11 @@
 # i3 config file 
 # Jeremy Wakeman jeremywakeman@gmail.com
 
+# set background
+exec feh --bg-max .snal_background.png --image-bg black
+
 # start screenlocker
-exec xautolock -time 30 -locker ~/.bin/lock
+exec xautolock -time 30 -locker ~/.bin/locker
 
 set $mod Mod4
 
@@ -33,7 +36,7 @@ bindsym $mod+shift+d exec i3-input -f "pango:monospace 32"
 bindsym $mod+q kill
 bindsym $mod+BackSpace reload
 bindsym $mod+Shift+BackSpace exec i3-msg exit
-bindsym $mod+p exec ~/.bin/lock
+bindsym $mod+p exec ~/.bin/locker
 
 # window movement
 # change focus
@@ -102,13 +105,13 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+z exec firefox
 
 # start inkscape 
-bindsym $mod+i exec inkscape
+#bindsym $mod+i exec inkscape
 
 # start libreoffice
-bindsym $mod+o exec libreoffice
+#bindsym $mod+o exec libreoffice
 
 # start calibre
-bindsym $mod+c exec calibre
+#bindsym $mod+c exec calibre
 
 # start pcmanfm
 bindsym $mod+x exec pcmanfm

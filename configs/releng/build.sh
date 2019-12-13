@@ -2,11 +2,17 @@
 
 set -e -u
 
+BUILD="0.4"
+DATE=`date "+%B %e, %Y"`
+
+sed -i -e "s/XXVERXX/$BUILD/g" -e "s/XXDATEXX/$DATE/g" airootfs/root/customize_airootfs.sh
+sed -i -e "s/XXVERXX/$BUILD/g" -e "s/XXDATEXX/$DATE/g" airootfs/etc/skel/README
+
 iso_name=snallinux
-iso_label="SNAL_$(date +%Y%m)"
+iso_label="SNAL_$BUILD"
 iso_publisher="Snal Linux"
-iso_application="Snal Linux Live/Rescue CD"
-iso_version=$(date +%Y.%m.%d)
+iso_application="Snal Linux Live USB/DVD"
+iso_version=$BUILD
 install_dir=snal
 work_dir=work
 out_dir=out
