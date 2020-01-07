@@ -134,6 +134,7 @@ pkgfile
 ppp
 pptpclient
 qiv
+qutebrowser
 ranger
 rdesktop
 refind-efi
@@ -150,6 +151,7 @@ sg3_utils
 slock
 smartmontools
 sudo
+surf
 sxiv
 sysstat
 tcpdump

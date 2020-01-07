@@ -104,6 +104,9 @@ bindsym $mod+f fullscreen toggle
 # start firefox
 bindsym $mod+z exec firefox
 
+# start portal assistant
+# bindsym $mod+a exec ~/.bin/portalassistant
+
 # start inkscape 
 #bindsym $mod+i exec inkscape
 

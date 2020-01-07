@@ -1,0 +1,27 @@
+#!/bin/bash
+# portalassistant - written by Jeremy Wakeman
+# a script for checking if you are behind a captive portal
+
+
+BROWSER="surf neverssl.com"
+
+options=0
+force=0
+
+# if options are passed, parse them
+if [[  $1 =~ - ]] ; then
+	if [[ $1 =~ f ]] ; then
+		force=1
+	fi
+	shift
+fi
+
+neverssl=0
+
+if [[ $force -eq 0 ]] ; then
+	lynx --dump http://neverssl.com/online | grep "not missing much" >/dev/null && neverssl=1
+fi
+
+if [[ $neverssl -eq 0 ]] || [[ $force -eq 1 ]] ; then
+	exec $BROWSER
+fi	
