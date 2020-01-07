@@ -149,7 +149,6 @@ sdparm
 sg3_utils
 slock
 smartmontools
-sonata
 sudo
 sxiv
 sysstat
@@ -180,6 +179,7 @@ xautolock
 xfsprogs
 xfce4
 xfce4-goodies
+xfmpc
 xl2tpd
 xorg-fonts-100dpi
 xorg-fonts-75dpi
