@@ -31,7 +31,6 @@ dmenu
 dmraid
 dnsmasq
 dnstracer
-dnsutils
 dos2unix
 dosbox
 dosfstools
@@ -178,9 +177,9 @@ wireshark-cli
 wpa_supplicant
 wvdial
 xautolock
+xfsprogs
 xfce4
 xfce4-goodies
-xfsprogs
 xl2tpd
 xorg-fonts-100dpi
 xorg-fonts-75dpi
