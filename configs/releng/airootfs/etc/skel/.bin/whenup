@@ -3,7 +3,8 @@
 bell=0
 down=0
 loop=0
-pause=0
+wait=0
+port=0
 root=0
 telnet=0
 onlytry=0
@@ -11,7 +12,7 @@ options=0
 
 # if there's an issue with the command, print usage
 if [ "$*" == "" ] ; then
-	echo "Usage: whenup [-bloprt] [host to ping] [command to execute]"
+	echo "Usage: whenup [-blortw] [-p <port to check>] [host to check] [command to execute]"
 	exit 1
 else
 
@@ -29,8 +30,8 @@ else
 		if [[ $1 =~ o ]] ; then
 			onlytry=1
 		fi
-		if [[ $1 =~ p ]] ; then
-			pause=1
+		if [[ $1 =~ w ]] ; then
+			wait=1
 		fi
 		if [[ $1 =~ r ]] ; then
 			root=1
@@ -38,11 +39,15 @@ else
 		if [[ $1 =~ t ]] ; then
 			telnet=1
 		fi
+		if [[ $1 =~ p ]] ; then
+			port=$2
+			shift
+		fi
 		shift
 	fi
 
-	# parse address or hostname to ping
-	ping=$1
+	# parse address or hostname to check
+	host=$1
 	shift
 
 	# if no command given, assume ssh the address or hostname
@@ -52,11 +57,14 @@ else
 				echo "Error: -r option and -t option should not be used together"
 				exit 1
 			fi
-			run="ssh root@$ping"
+			run="ssh root@$host"
+			port=22
 		elif [ "$telnet" == "1" ] ; then
-			run="telnet $ping"
+			run="telnet $host"
+			port=23
 		else
-			run="ssh $ping"
+			run="ssh $host"
+			port=22
 		fi
 	else
 		if [ "$root" == "1" ] ; then
@@ -73,64 +81,38 @@ fi
 
 # make sure IP is down first, if that option was selected
 if [ "$down" == "1" ] ; then
-	echo -n "Waiting for $ping to be down "
+	echo -n "Waiting for $host to be down "
 	ipdown=0
 	while [ "$ipdown" -eq "0" ] ; do
 		echo -n ". "
-		ping -w 2 $ping > /dev/null || ipdown=1
+		ping -w 2 $host > /dev/null || ipdown=1
 		sleep 1
 	done
 	echo "done"
 fi
 
-# if we should pause, pause
-if [ "$pause" == "1" ] ; then
+# if we should wait, wait
+if [ "$wait" == "1" ] ; then
 	echo sleeping for 10 seconds . . .
 	sleep 10
 fi
 # if we should bell, bell
 if [ "$bell" == "1" ] ; then
-	/home/cael/.bin/bell
+	~/.bin/bell
 fi
 
-# if we should loop, loop
-if [ "$loop" == "1" ] ; then
-	while [ true ] ; do
-		echo -n "Waiting for $ping to be up "
-		ipup=0
-		numtries=0
-		while [ "$ipup" -eq "0" ] ; do
-			echo -n ". "
-			ping -w 2 $ping >/dev/null && ipup=1
-			sleep 1
-			numtries=$(($numtries+1))
-			if [ "$onlytry" -eq "1" ] && [ "$numtries" -ge "3" ] ; then
-				echo "No response after three tries, quitting"
-				exit 1
-			fi
-		done
-		echo "done"
-		# if we should pause, pause
-		if [ "$pause" == "1" ] ; then
-			echo sleeping for 15 seconds . . .
-			sleep 15
-		fi
-		# if we should bell, bell
-		if [ "$bell" == "1" ] ; then
-			/home/cael/.bin/bell
-		fi
-		$run
-		echo sleeping for 15 seconds . . .
-		sleep 15
-	done
-# here's the non-looping version
-else
-	echo -n "Waiting for $ping to be up "
+runonce=1
+while [[ $loop -eq 1 ]] || [[ $runonce -eq 1 ]] ; do
+	echo -n "Waiting for $host to be up "
 	ipup=0
 	numtries=0
 	while [ "$ipup" -eq "0" ] ; do
 		echo -n ". "
-		ping -w 2 $ping >/dev/null && ipup=1
+		if [[ $port -eq 0 ]] ; then
+			ping -w 2 $host >/dev/null && ipup=1
+		else
+			nc -zw 2 $host $port 2>/dev/null && ipup=1
+		fi
 		sleep 1
 		numtries=$(($numtries+1))
 		if [ "$onlytry" -eq "1" ] && [ "$numtries" -ge "3" ] ; then
@@ -139,8 +121,8 @@ else
 		fi
 	done
 	echo "done"
-	# if we should pause, pause
-	if [ "$pause" == "1" ] ; then
+	# if we should wait, wait
+	if [ "$wait" == "1" ] ; then
 		echo sleeping for 15 seconds . . .
 		sleep 15
 	fi
@@ -149,4 +131,9 @@ else
 		~/.bin/bell
 	fi
 	$run
-fi
+	if [[ $loop -eq 1 ]] ; then
+		echo sleeping for 15 seconds . . .
+		sleep 15
+	fi
+	runonce=0
+done

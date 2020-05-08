@@ -1,14 +1,15 @@
 #!/bin/bash
 
 bell=0
-pause=0
+wait=0
+port=0
 root=0
 telnet=0
 options=0
 
 # if there's an issue with the command, print usage
 if [ "$*" == "" ] ; then
-	echo "Usage: ifup [-bprt] [host to ping] [command to execute]"
+	echo "Usage: ifup [-brtw] [-p <port to check>] [host to check] [command to execute]"
 	exit 1
 else
 
@@ -17,8 +18,8 @@ else
 		if [[ $1 =~ b ]] ; then
 			bell=1
 		fi
-		if [[ $1 =~ p ]] ; then
-			pause=1
+		if [[ $1 =~ w ]] ; then
+			wait=1
 		fi
 		if [[ $1 =~ r ]] ; then
 			root=1
@@ -26,11 +27,15 @@ else
 		if [[ $1 =~ t ]] ; then
 			telnet=1
 		fi
+		if [[ $1 =~ p ]] ; then
+			port=$2
+			shift
+		fi
 		shift
 	fi
 
-	# parse address or hostname to ping
-	ping=$1
+	# parse address or hostname to check
+	host=$1
 	shift
 
 	# if no command given, assume ssh the address or hostname
@@ -40,11 +45,14 @@ else
 				echo "Error: -r option and -t option should not be used together"
 				exit 1
 			fi
-			run="ssh root@$ping"
+			run="ssh root@$host"
+			port=22
 		elif [ "$telnet" == "1" ] ; then
-			run="telnet $ping"
+			run="telnet $host"
+			port=23
 		else
-			run="ssh $ping"
+			run="ssh $host"
+			port=22
 		fi
 	else
 		if [ "$root" == "1" ] ; then
@@ -61,8 +69,12 @@ fi
 
 ipup=0
 numtries=0
-while [ "$ipup" -eq "0" ] ; do
-	ping -w 2 $ping && ipup=1
+while [[ $ipup -eq 0 ]] ; do
+	if [[ $port -eq 0 ]] ; then
+		ping -w 2 $host && ipup=1
+	else
+		nc -zw 2 $host $port 2>/dev/null && ipup=1
+	fi
 	sleep 1
 	numtries=$(($numtries+1))
 	if [ "$numtries" -ge "3" ] ; then
@@ -70,8 +82,8 @@ while [ "$ipup" -eq "0" ] ; do
 		exit 1
 	fi
 done
-# if we should pause, pause
-if [ "$pause" == "1" ] ; then
+# if we should wait, wait
+if [ "$wait" == "1" ] ; then
 	echo sleeping for 30 seconds . . .
 	sleep 30
 fi
