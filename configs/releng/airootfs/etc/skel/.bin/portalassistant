@@ -3,7 +3,7 @@
 # a script for checking if you are behind a captive portal
 
 
-BROWSER="surf neverssl.com"
+BROWSER="firefox --new-tab http://neverssl.com"
 
 options=0
 force=0

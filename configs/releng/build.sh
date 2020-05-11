@@ -2,7 +2,7 @@
 
 set -e -u
 
-BUILD="0.5"
+BUILD="0.7"
 DATE=`date "+%B %e, %Y"`
 
 sed -i -e "s/XXVERXX/$BUILD/g" -e "s/XXDATEXX/$DATE/g" airootfs/root/customize_airootfs.sh
