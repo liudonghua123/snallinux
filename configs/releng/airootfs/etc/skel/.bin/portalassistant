@@ -19,9 +19,11 @@ fi
 neverssl=0
 
 if [[ $force -eq 0 ]] ; then
-	lynx --dump http://neverssl.com/online | grep "not missing much" >/dev/null && neverssl=1
+	lynx --dump http://neverssl.com/online 2>/dev/null | grep "not missing much" >/dev/null && neverssl=1
 fi
 
 if [[ $neverssl -eq 0 ]] || [[ $force -eq 1 ]] ; then
-	exec $BROWSER
+	exec $BROWSER &
+else
+	echo "neverssl is accessible"
 fi	
