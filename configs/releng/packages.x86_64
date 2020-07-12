@@ -24,7 +24,6 @@ darkhttpd
 ddrescue
 dhclient
 dhcpcd
-dialog
 diffutils
 dillo
 dmenu
@@ -36,6 +35,7 @@ dosbox
 dosfstools
 dstat
 e2fsprogs
+efibootmgr
 elinks
 etherape
 ethtool
@@ -60,7 +60,6 @@ gpm
 gptfdisk
 grep
 grml-zsh-config
-grub
 gzip
 hdparm
 hping
@@ -85,6 +84,7 @@ iw
 iwd
 jfsutils
 kismet
+kitty-terminfo
 less
 lftp
 links
@@ -121,6 +121,7 @@ nmap
 ntfs-3g
 ntop
 ntp
+nvme-cli
 openconnect
 openssh
 openvpn
@@ -139,11 +140,13 @@ qutebrowser
 ranger
 rdesktop
 refind-efi
+reflector
 reiserfsprogs
 ristretto
 rofi
 rp-pppoe
 rsync
+rxvt-unicode-terminfo
 screen
 screenfetch
 scrot
@@ -154,8 +157,11 @@ smartmontools
 sudo
 sxiv
 sysstat
+systemd-resolvconf
 tcpdump
+terminus-font
 termite
+termite-terminfo
 testdisk
 tigervnc
 tty-clock
@@ -164,7 +170,6 @@ unrar
 unzip
 usb_modeswitch
 usbutils
-vi
 vim
 vnstat
 vpnc

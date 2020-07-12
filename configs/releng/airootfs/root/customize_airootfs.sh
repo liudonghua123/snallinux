@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e -u
 
@@ -20,6 +20,7 @@ gpasswd -a snal wheel
 gpasswd -a snal audio
 gpasswd -a snal video
 cp -aT /etc/skel/ /home/snal/
+cp -aT /etc/skel/ /root/
 sed -i "s/#runroot/\/home\/snal\/.bin\/runroot/" /home/snal/.screenrc
 sed -i "s/#runweb/\/home\/snal\/.bin\/runweb/" /home/snal/.screenrc
 sed -i "s/#runirssi/\/home\/snal\/.bin\/runirssi/" /home/snal/.screenrc
