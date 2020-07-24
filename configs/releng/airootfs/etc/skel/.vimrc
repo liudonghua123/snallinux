@@ -16,7 +16,7 @@ set shiftwidth=4
 set viminfo=%,<800,'10,/50,:100,h,f0
 syntax on
 set background=dark
-colorscheme desert
+colorscheme solarized
 autocmd! bufread
 
 filetype plugin indent on
