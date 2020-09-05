@@ -1,10 +1,14 @@
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 alsa-lib
 alsa-plugins
 alsa-utils
+amd-ucode
 arandr
 arch-install-scripts
 arch-wiki-lite
 b43-fwcutter
+base
 bash
 bash-completion
 bc
@@ -36,6 +40,7 @@ dosbox
 dosfstools
 dstat
 e2fsprogs
+edk2-shell
 efibootmgr
 elinks
 etherape
@@ -43,6 +48,7 @@ ethtool
 ettercap
 ettercap-gtk
 exfat-utils
+exfatprogs
 f2fs-tools
 feh
 file
@@ -62,6 +68,7 @@ gptfdisk
 grep
 grml-zsh-config
 gzip
+haveged
 hdparm
 hping
 htop
@@ -72,6 +79,7 @@ id3v2
 iftop
 imagemagick
 inetutils
+intel-ucode
 ipcalc
 iperf
 iperf3
@@ -89,17 +97,23 @@ kitty-terminfo
 less
 lftp
 links
+linux
 linux-atm
 linux-firmware
 lsof
 lsscsi
 lvm2
 lynx
+make
 man-db
 man-pages
 mc
 mdadm
+memtest86+
 midori
+mkinitcpio
+mkinitcpio-archiso
+mkinitcpio-nfs-utils
 moc
 moreutils
 mosh
@@ -112,6 +126,7 @@ mtr
 multitail
 mupdf
 nano
+nbd
 ndisc6
 netctl
 nethogs
@@ -157,6 +172,7 @@ slock
 smartmontools
 sudo
 sxiv
+syslinux
 sysstat
 systemd-resolvconf
 tcpdump
@@ -184,10 +200,10 @@ wireshark-cli
 wpa_supplicant
 wvdial
 xautolock
-xfsprogs
 xfce4
 xfce4-goodies
 xfmpc
+xfsprogs
 xl2tpd
 xorg-fonts-100dpi
 xorg-fonts-75dpi
@@ -208,3 +224,4 @@ xterm
 zathura
 zathura-pdf-mupdf
 zip
+zsh
