@@ -1,0 +1,9 @@
+NAME="Snal Linux"
+PRETTY_NAME="Snal Linux"
+ID=snal
+BUILD_ID="XXVERXX"
+ANSI_COLOR="0;36"
+HOME_URL="https://sourceforge.net/projects/snallinux/"
+DOCUMENTATION_URL="https://sourceforge.net/p/snallinux/wiki/Home/"
+SUPPORT_URL="https://sourceforge.net/p/snallinux/wiki/Home/"
+LOGO=snallinux
