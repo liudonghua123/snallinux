@@ -374,9 +374,15 @@ _make_packages() {
 # Customize installation (airootfs)
 _make_customize_airootfs() {
     local passwd=()
+    if [[ "$app_name" == "snal" ]] ; then
+        # modify README 
+        if [[ -e "${airootfs_dir}/etc/skel/README" ]] ; then
+            _msg_info "Modifying /etc/skel/README..."
+            sed -i -e "s/XXVERXX/$BUILD/g" -e "s/XXDATEXX/$DATE/g" "${airootfs_dir}/etc/skel/README"
+        fi
+    fi
 
     if [[ -e "${profile}/airootfs/etc/passwd" ]]; then
-
         _msg_info "Copying /etc/skel/* to user homes..."
         while IFS=':' read -a passwd -r; do
             [[ "${passwd[5]}" == '/' ]] && continue
@@ -390,48 +396,46 @@ _make_customize_airootfs() {
     fi
 
 
-    # Snal specific changes
     if [[ "$app_name" == "snal" ]] ; then
-        _msg_info "Running Snal specific customizations..."
-    
+        # disable systemd-networkd.service and enable netctl.service
+        if [[ -e "${airootfs_dir}/etc/systemd/system/systemd-networkd.service" ]] ; then
+            _msg_info "Disabling systemd-networkd.service..."
+            rm "${airootfs_dir}/etc/systemd/system/systemd-networkd.service"
+            _msg_info "Enabling netctl.service..."
+            ln -s "/usr/lib/systemd/system/netctl.service" "${airootfs_dir}/etc/systemd/system/netctl.service"
+        fi
         # swap .screenrc files in snal home dir
-        if [[ -e "${airootfs_dir}/home/snal/.screenrc ]] && [[ -e "${airootfs_dir}/home/snal/.screenrc.alt ]] ; then
-            _msg_info "Swapping screenrc files..."
+        if [[ -e "${airootfs_dir}/home/snal/.screenrc" ]] && [[ -e "${airootfs_dir}/home/snal/.screenrc.alt" ]] ; then
+            _msg_info "Swapping screenrc files in /home/snal..."
             mv "${airootfs_dir}/home/snal/.screenrc" "${airootfs_dir}/home/snal/.screenrc.temp"
             mv "${airootfs_dir}/home/snal/.screenrc.alt" "${airootfs_dir}/home/snal/.screenrc"
             mv "${airootfs_dir}/home/snal/.screenrc.temp" "${airootfs_dir}/home/snal/.screenrc.alt"
         fi
         # modify sudoers
         if [[ -e "${airootfs_dir}/etc/sudoers" ]] ; then
-            _msg_info "Modifying Sudoers..."
+            _msg_info "Modifying /etc/sudoers..."
             sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
         fi
         # modify pacman.conf
         if [[ -e "${airootfs_dir}/etc/pacman.conf" ]] ; then
-            _msg_info "Modifying pacman.conf..."
+            _msg_info "Removing snalrepo from /etc/pacman.conf..."
             sed -i '/snalrepo/,+2d' "${airootfs_dir}/etc/pacman.conf"
         fi
         # modify pacman mirrorlist
         if [[ -e "${airootfs_dir}/etc/pacman.d/mirrorlist" ]] ; then
-            _msg_info "Modifying mirrorlist..."
+            _msg_info "Modifying /etc/pacman.d/mirrorlist..."
             sed -i 's/#Server/Server/g' "/etc/pacman.d/mirrorlist"
-        fi
-        # modify README 
-        if [[ -e "${airootfs_dir}/etc/skel/README" ]] ; then
-            _msg_info "Modifying README..."
-            sed -i -e "s/XXVERXX/$BUILD/g" -e "s/XXDATEXX/$DATE/g" "${airootfs_dir}/etc/skel/README"
         fi
         # modify os-release 
         if [[ -e "${airootfs_dir}/etc/skel/README" ]] ; then
-            _msg_info "Modifying os-release..."
+            _msg_info "Adding version and date to /etc/os-release..."
             sed -i -e "s/XXVERXX/$BUILD/g" -e "s/XXDATEXX/$DATE/g" "${airootfs_dir}/etc/os-release"
         fi
         # add snal-release
         if [[ -e "${airootfs_dir}/etc/skel/README" ]] ; then
-            _msg_info "Adding snal-release..."
+            _msg_info "Adding version $BUILD to /etc/snal-release..."
             echo $BUILD > "${airootfs_dir}/etc/snal-release"
         fi
-        _msg_info "Done Snal specific customizations!"
     fi
 
     if [[ -e "${airootfs_dir}/root/customize_airootfs.sh" ]]; then
