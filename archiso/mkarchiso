@@ -374,7 +374,7 @@ _make_packages() {
 # Customize installation (airootfs)
 _make_customize_airootfs() {
     local passwd=()
-    if [[ "$app_name" == "snal" ]] ; then
+    if [[ "$app_name" == "snallinux" ]] ; then
         # modify README 
         if [[ -e "${airootfs_dir}/etc/skel/README" ]] ; then
             _msg_info "Modifying /etc/skel/README..."
@@ -396,7 +396,7 @@ _make_customize_airootfs() {
     fi
 
 
-    if [[ "$app_name" == "snal" ]] ; then
+    if [[ "$app_name" == "snallinux" ]] ; then
         # disable systemd-networkd.service and enable netctl.service
         if [[ -e "${airootfs_dir}/etc/systemd/system/systemd-networkd.service" ]] ; then
             _msg_info "Disabling systemd-networkd.service..."
