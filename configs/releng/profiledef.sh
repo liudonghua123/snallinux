@@ -4,8 +4,8 @@
 BUILD="0.9"
 DATE=`date "+%B %e, %Y"`
 
-app_name="snal"
-iso_name="snal"
+app_name="snallinux"
+iso_name="snallinux"
 iso_label="SNAL_$BUILD"
 iso_publisher="Snal Linux <https://sourceforge.net/projects/snallinux/>"
 iso_application="Snal Linux"
