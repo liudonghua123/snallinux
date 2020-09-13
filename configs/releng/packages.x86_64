@@ -170,6 +170,7 @@ sdparm
 sg3_utils
 slock
 smartmontools
+socat
 sudo
 sxiv
 syslinux
