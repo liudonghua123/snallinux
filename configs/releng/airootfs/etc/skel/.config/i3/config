@@ -5,7 +5,7 @@
 exec feh --bg-max .snal_background.png --image-bg black
 
 # start screenlocker
-exec xautolock -time 30 -locker ~/.bin/locker
+exec xautolock -time 30 -locker /usr/local/bin/locker
 
 set $mod Mod4
 
@@ -25,7 +25,7 @@ for_window [title="CSSH"] floating enable
 for_window [title="CTEL"] floating enable
 
 # launcher settings
-bindsym $mod+Shift+Return exec ~/.bin/launcher
+bindsym $mod+Shift+Return exec /usr/local/bin/launcher
 for_window [title="^launcher$"] floating enable
 
 # Basic keys
@@ -36,7 +36,7 @@ bindsym $mod+shift+d exec i3-input -f "pango:monospace 32"
 bindsym $mod+q kill
 bindsym $mod+BackSpace reload
 bindsym $mod+Shift+BackSpace exec i3-msg exit
-bindsym $mod+p exec ~/.bin/locker
+bindsym $mod+p exec /usr/local/bin/locker
 
 # window movement
 # change focus
@@ -71,10 +71,10 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+Shift+space floating toggle
 
 # window resizing
-bindsym $mod+Shift+y exec --no-startup-id ~/.bin/i3resize left
-bindsym $mod+Shift+u exec --no-startup-id ~/.bin/i3resize down
-bindsym $mod+Shift+i exec --no-startup-id ~/.bin/i3resize up
-bindsym $mod+Shift+o exec --no-startup-id ~/.bin/i3resize right
+bindsym $mod+Shift+y exec --no-startup-id /usr/local/bin/i3resize left
+bindsym $mod+Shift+u exec --no-startup-id /usr/local/bin/i3resize down
+bindsym $mod+Shift+i exec --no-startup-id /usr/local/bin/i3resize up
+bindsym $mod+Shift+o exec --no-startup-id /usr/local/bin/i3resize right
 
 # workspace movement
 # move focused workspace
@@ -105,7 +105,7 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+z exec firefox
 
 # start portal assistant
- bindsym $mod+a exec ~/.bin/portalassistant
+ bindsym $mod+a exec /usr/local/bin/portalassistant
 
 # start inkscape 
 #bindsym $mod+i exec inkscape

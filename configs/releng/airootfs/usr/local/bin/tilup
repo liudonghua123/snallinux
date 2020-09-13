@@ -1,0 +1,62 @@
+#!/bin/bash
+
+bell=0
+options=0
+port=0
+wait=0
+
+# if options are passed, parse them
+if [[  $1 =~ - ]] ; then
+	if [[ $1 =~ b ]] ; then
+		bell=1
+	fi
+	if [[ $1 =~ w ]] ; then
+		wait=1
+	fi
+	if [[ $1 =~ p ]] ; then
+		port=$2
+		shift
+	fi
+	shift
+fi
+
+if [[ "$1" == "" ]] ; then
+	host="neverssl.com"
+	port=80
+	echo -n "checking if $host is up "
+	ipup=0
+	while [[ $ipup -eq 0 ]] ; do
+		nc -zw 2 $host $port 2>/dev/null && ipup=1
+		echo -n ". "
+		sleep 1
+	done
+	echo "done"
+else
+	while [[ "$1" != "" ]] ; do
+		# parse address or hostname to check
+		host=$1
+		shift
+		echo -n "checking if $host is up "
+		ipup=0
+		while [[ $ipup -eq 0 ]] ; do
+			if [[ $port -eq 0 ]] ; then
+				ping -w 2 $host && ipup=1
+			else
+				nc -zw 2 $host $port 2>/dev/null && ipup=1
+			fi
+			echo -n ". "
+			sleep 1
+		done
+		echo "done"
+	done
+fi
+
+# if we should wait, wait
+if [ "$wait" == "1" ] ; then
+	echo sleeping for 10 seconds . . .
+	sleep 10
+fi
+# if we should bell, bell
+if [ "$bell" == "1" ] ; then
+	/usr/local/bin/bell
+fi

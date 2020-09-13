@@ -1,0 +1,25 @@
+#!/bin/bash
+
+TEMPFILE="/tmp/pacver.temp"
+
+if [[ "$1" == "" ]] ; then
+	packages="alsa-lib alsa-plugins alsa-utils amd-ucode arandr arch-install-scripts arch-wiki-lite b43-fwcutter base bash bash-completion bc bind-tools bitlbee bmon broadcom-wl btrfs-progs catdoc chrony clonezilla clusterssh coreutils crda curl darkhttpd ddrescue dhclient dhcpcd dialog diffutils dillo dmenu dmraid dnsmasq dnstracer dos2unix dosbox dosfstools dstat e2fsprogs edk2-shell efibootmgr elinks etherape ethtool ettercap ettercap-gtk exfat-utils exfatprogs f2fs-tools feh file findutils firefox fping fsarchiver gcc git glances glibc gnu-netcat gnupg gparted gpm gptfdisk grep grml-zsh-config gzip haveged hdparm hping htop i3-gaps i3lock i3status id3v2 iftop imagemagick inetutils intel-ucode ipcalc iperf iperf3 iptables iptraf-ng iputils ipw2100-fw ipw2200-fw irssi iw iwd jfsutils kismet kitty-terminfo less lftp links linux linux-atm linux-firmware lsof lsscsi lvm2 lynx make man-db man-pages mc mdadm memtest86+ midori mkinitcpio mkinitcpio-archiso mkinitcpio-nfs-utils moc moreutils mosh mousepad mpd mpg123 mpv mtools mtr multitail mupdf nano nbd ndisc6 netctl nethogs nfs-utils ngrep nilfs-utils nmap ntfs-3g ntop ntp nvme-cli openconnect openssh openvpn p0f p7zip partclone parted partimage pcmanfm perl-math-round pkgfile ppp pptpclient qiv qutebrowser ranger rdesktop refind-efi reflector reiserfsprogs ristretto rofi rp-pppoe rsync rxvt-unicode-terminfo screen screenfetch scrot sdparm sg3_utils slock smartmontools sudo sxiv syslinux sysstat systemd-resolvconf tcpdump terminus-font termite termite-terminfo testdisk tigervnc tty-clock unison unrar unzip usb_modeswitch usbutils vim vnstat vpnc webfs wget whois wipe wireless-regdb wireless_tools wireshark-cli wpa_supplicant wvdial xautolock xfce4 xfce4-goodies xfmpc xfsprogs xl2tpd xorg-fonts-100dpi xorg-fonts-75dpi xorg-server xorg-xcalc xorg-xclock xorg-xfontsel xorg-xinit xorg-xinput xorg-xload xorg-xmag xorg-xprop xorg-xrandr xorg-xwininfo xscreensaver xsel xterm zathura zathura-pdf-mupdf zip zsh"
+else
+	packages="$@"
+fi
+
+firstloop=0
+for package in $packages ; do 
+	if [[ $firstloop -eq 0 ]] ; then
+		echo -n "($package" > $TEMPFILE
+		firstloop=1
+	else
+		echo -n " |^$package" >> $TEMPFILE
+	fi
+done
+
+echo -n " )" >> $TEMPFILE
+
+#cat $TEMPFILE
+
+pacman -Q | grep -E "`cat $TEMPFILE`"

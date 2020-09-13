@@ -11,8 +11,8 @@ defscrollback 5000
 
 bind o blanker
 
-screen -t root		0	#runroot
-screen -t web		4	#runweb
-screen -t irssi		3	#runirssi
-screen -t bash		2	#runloop
-screen -t main		1	#runmain
+screen -t root		0	/usr/local/bin/runroot
+screen -t web		4	/usr/local/bin/runweb
+screen -t irssi		3	/usr/local/bin/runirssi
+screen -t bash		2	/usr/local/bin/runloop
+screen -t main		1	/usr/local/bin/runmain

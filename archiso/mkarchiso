@@ -397,12 +397,19 @@ _make_customize_airootfs() {
 
 
     if [[ "$app_name" == "snallinux" ]] ; then
-        # disable systemd-networkd.service and enable netctl.service
-        if [[ -e "${airootfs_dir}/etc/systemd/system/systemd-networkd.service" ]] ; then
-            _msg_info "Disabling systemd-networkd.service..."
-            rm "${airootfs_dir}/etc/systemd/system/systemd-networkd.service"
-            _msg_info "Enabling netctl.service..."
-            ln -s "/usr/lib/systemd/system/netctl.service" "${airootfs_dir}/etc/systemd/system/netctl.service"
+        # disable systemd-networkd.service
+        _msg_info "Disabling systemd-networkd.service..."
+        if [[ -e "${airootfs_dir}/etc/systemd/system/dbus-org.freedesktop.network1.service" ]] ; then
+            rm "${airootfs_dir}/etc/systemd/system/dbus-org.freedesktop.network1.service"
+        fi
+        if [[ -e "${airootfs_dir}/etc/systemd/system/multi-user.target.wants/systemd-networkd.service" ]] ; then
+            rm "${airootfs_dir}/etc/systemd/system/multi-user.target.wants/systemd-networkd.service"
+        fi
+        if [[ -e "${airootfs_dir}/etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service" ]] ; then
+            rm "${airootfs_dir}/etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service"
+        fi
+        if [[ -e "${airootfs_dir}/etc/systemd/system/sockets.target.wants/systemd-networkd.socket" ]] ; then
+            rm "${airootfs_dir}/etc/systemd/system/sockets.target.wants/systemd-networkd.socket"
         fi
         # swap .screenrc files in snal home dir
         if [[ -e "${airootfs_dir}/home/snal/.screenrc" ]] && [[ -e "${airootfs_dir}/home/snal/.screenrc.alt" ]] ; then
@@ -414,7 +421,7 @@ _make_customize_airootfs() {
         # modify sudoers
         if [[ -e "${airootfs_dir}/etc/sudoers" ]] ; then
             _msg_info "Modifying /etc/sudoers..."
-            sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+            sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' "${airootfs_dir}/etc/sudoers"
         fi
         # modify pacman.conf
         if [[ -e "${airootfs_dir}/etc/pacman.conf" ]] ; then
@@ -423,8 +430,8 @@ _make_customize_airootfs() {
         fi
         # modify pacman mirrorlist
         if [[ -e "${airootfs_dir}/etc/pacman.d/mirrorlist" ]] ; then
-            _msg_info "Modifying /etc/pacman.d/mirrorlist..."
-            sed -i 's/#Server/Server/g' "/etc/pacman.d/mirrorlist"
+            _msg_info "Placing reflector output in /etc/pacman.d/mirrorlist..."
+            reflector > "${airootfs_dir}/etc/pacman.d/mirrorlist"
         fi
         # modify os-release 
         if [[ -e "${airootfs_dir}/etc/skel/README" ]] ; then

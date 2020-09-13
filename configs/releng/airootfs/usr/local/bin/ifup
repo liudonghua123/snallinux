@@ -89,6 +89,6 @@ if [ "$wait" == "1" ] ; then
 fi
 # if we should bell, bell
 if [ "$bell" == "1" ] ; then
-	~/.bin/bell
+	/usr/local/bin/bell
 fi
 $run

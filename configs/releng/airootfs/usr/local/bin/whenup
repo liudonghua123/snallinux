@@ -12,7 +12,7 @@ options=0
 
 # if there's an issue with the command, print usage
 if [ "$*" == "" ] ; then
-	echo "Usage: whenup [-blortw] [-p <port to check>] [host to check] [command to execute]"
+	echo "Usage: whenup [-blortw] [-p <port to check>] <host to check> [command to execute]"
 	exit 1
 else
 
