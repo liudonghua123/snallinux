@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
-BUILD="0.9"
+BUILD="1.0"
 DATE=`date "+%B %e, %Y"`
 
 app_name="snallinux"

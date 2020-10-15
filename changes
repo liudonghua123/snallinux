@@ -3,6 +3,20 @@ Snal Linux
 Wishlist
 
 Release New Version
+	TODO update configs/releng/profiledef.sh to new version
+	TODO build new ISO
+	TODO test new ISO
+	TODO upload new ISO
+	TODO update README
+	TODO update home wiki page
+	TODO add version wiki page with output of pacver
+	TODO email distro@distrowatch.com and support@distrotest.net
+	TODO merge new changes into master branch
+
+Version 1.0
+	CHCK update configs/releng/profiledef.sh to new version
+	CHCK build new ISO
+	TODO test new ISO
 	TODO upload new ISO
 	TODO update README
 	TODO update home wiki page
