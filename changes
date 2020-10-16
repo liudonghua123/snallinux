@@ -40,4 +40,4 @@ Version 0.9
 	DONE update home wiki page
 	DONE add version wiki page with output of pacver
 	DONE email distro@distrowatch.com and support@distrotest.net
-	TODO merge new changes into master branch
+	DONE merge new changes into master branch
