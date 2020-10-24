@@ -206,11 +206,14 @@ xfce4-goodies
 xfmpc
 xfsprogs
 xl2tpd
+xorg-drivers
+xorg-fonts
 xorg-fonts-100dpi
 xorg-fonts-75dpi
 xorg-server
 xorg-xcalc
 xorg-xclock
+xorg-xev
 xorg-xfontsel
 xorg-xinit
 xorg-xinput

@@ -1,19 +1,10 @@
 Snal Linux
 
 Wishlist
+	TODO nothing at the moment
 
 Release New Version
-	TODO update configs/releng/profiledef.sh to new version
-	TODO build new ISO
-	TODO test new ISO
-	TODO upload new ISO
-	TODO update README
-	TODO update home wiki page
-	TODO add version wiki page with output of pacver
-	TODO email distro@distrowatch.com and support@distrotest.net
-	TODO merge new changes into master branch
-
-Version 1.0
+	CHCK merge upstream changes into testing branch
 	CHCK update configs/releng/profiledef.sh to new version
 	CHCK build new ISO
 	TODO test new ISO
@@ -24,20 +15,12 @@ Version 1.0
 	TODO email distro@distrowatch.com and support@distrotest.net
 	TODO merge new changes into master branch
 
-Version 0.9
-	DONE modify /etc/skel/.screenrc.alt so that runroot, runloop, etc are run on snal login
-		remove # so that things execute
-	DONE move ~/.bin files to /usr/local/bin
-	DONE set snal passwd and root passwd
-	DONE fix boot to RAM
-	DONE put image size in /etc/skel/README
-	DONE dont run systemd-networkd.service at boot
-	DONE run pacman -Qqet | tr '\n' ' '    and put the results in /usr/local/bin/pacver
-	DONE change sudoers to allow members of wheel to use sudo with password
-	DONE reflector > /etc/pacman.d/mirrorlist
-	DONE upload new ISO
-	DONE update README
-	DONE update home wiki page
-	DONE add version wiki page with output of pacver
-	DONE email distro@distrowatch.com and support@distrotest.net
-	DONE merge new changes into master branch
+Version 1.0
+	merged upstream changes 
+	added xorg drivers to support more hardware
+
+Version 0.9 
+	merged upstream changes 
+	moved /home/snal/.bin files to /usr/local/bin
+	stopped systemd-networkd.service from running at boot
+	added 

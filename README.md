@@ -1,6 +1,4 @@
-=======
-Snal Linux
-=======
+#Snal Linux
 
 Welcome to Snal Linux
 Simple Networked and Live
@@ -9,9 +7,9 @@ Snal is based on Arch linux <https://www.archlinux.org>, the i3 window manager <
 
 Snal is built using the archiso scripts from the archiso project, which is also used to build the official Arch ISO. The scripts were forked from archiso. Upstream changes are merged into Snal every few months.
 
-=======
+## Prerequisites
 
-The following packages need to be installed to be able to create an image with the included scripts:
+Snal must be built on an Arch or Arch-based system. The following packages need to be installed to be able to create an image with the included scripts:
 
 * arch-install-scripts
 * dosfstools
@@ -29,10 +27,7 @@ For linting the shell scripts the following package is required:
 
 * shellcheck
 
-Create Snal image
------------------------------------
-
-  .. code:: bash
+## Building a Snal image
 
     # run as root
     # make directory for building (if needed)
@@ -46,12 +41,12 @@ Create Snal image
     # call mkarchiso 
     ./archiso/mkarchiso -v -w work -o out releng | tee mkarchiso.log
 
-Contribute
-==========
+## Contributing
 
 Development of Snal takes place on Sourceforge: https://sourceforge.net/projects/snallinux
 
-License
-=======
+If you are interested in contributing to Snal, I suggest either testing the latest build or directly contributing to Arch Linux.
 
-Snal linux is licensed under the terms of the **GPL-3.0-or-later** (see `LICENSE <LICENSE>`_).
+## License
+
+Snal linux is licensed under the terms of the GPL-3.0-or-later
