@@ -4,14 +4,14 @@ Wishlist
 	TODO nothing at the moment
 
 Release New Version
-	CHCK merge upstream changes into testing branch
-	CHCK update configs/releng/profiledef.sh to new version
-	CHCK build new ISO
-	TODO test new ISO
-	TODO upload new ISO
-	TODO update README
-	TODO update home wiki page
-	TODO add version wiki page with output of pacver
+	DONE merge upstream changes into testing branch
+	DONE update configs/releng/profiledef.sh to new version
+	DONE build new ISO
+	DONE test new ISO
+	DONE upload new ISO
+	DONE update README
+	DONE update home wiki page
+	DONE add version wiki page with output of pacver
 	TODO email distro@distrowatch.com and support@distrotest.net
 	TODO merge new changes into master branch
 
