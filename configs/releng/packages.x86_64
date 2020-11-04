@@ -15,6 +15,7 @@ bc
 bind-tools
 bitlbee
 bmon
+brltty
 broadcom-wl
 btrfs-progs
 catdoc
@@ -44,6 +45,7 @@ edk2-shell
 efibootmgr
 elinks
 etherape
+espeakup
 ethtool
 ettercap
 ettercap-gtk
@@ -55,6 +57,7 @@ file
 findutils
 firefox
 fping
+fatresize
 fsarchiver
 gcc
 git
@@ -62,6 +65,7 @@ glances
 glibc
 gnu-netcat
 gnupg
+gpart
 gparted
 gpm
 gptfdisk
@@ -101,6 +105,7 @@ linux
 linux-atm
 linux-firmware
 lsof
+livecd-sounds
 lsscsi
 lvm2
 lynx
@@ -170,7 +175,9 @@ sdparm
 sg3_utils
 slock
 smartmontools
+<<<<<<< HEAD
 socat
+squashfs-tools
 sudo
 sxiv
 syslinux
@@ -186,6 +193,7 @@ tty-clock
 unison
 unrar
 unzip
+udftools
 usb_modeswitch
 usbutils
 vim

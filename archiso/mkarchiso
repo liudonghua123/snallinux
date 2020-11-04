@@ -17,8 +17,6 @@ quiet="y"
 work_dir="work"
 out_dir="out"
 img_name="${app_name}.iso"
-sfs_mode="sfs"
-sfs_comp="xz"
 gpg_key=""
 override_gpg_key=""
 
@@ -38,6 +36,8 @@ arch="$(uname -m)"
 pacman_conf="/etc/pacman.conf"
 override_pacman_conf=""
 bootmodes=()
+airootfs_image_type="squashfs"
+airootfs_image_tool_options=('-comp' 'xz')
 
 
 # Show an INFO message
@@ -95,7 +95,7 @@ _umount_airootfs() {
 # $1: exit status number.
 _usage() {
     IFS='' read -r -d '' usagetext <<ENDUSAGETEXT || true
-usage ${app_name} [options] <profile_dir or legacy_command>
+usage: ${app_name} [options] <profile_dir>
   options:
      -A <application> Set an application name for the ISO
                       Default: '${iso_application}'
@@ -108,39 +108,16 @@ usage ${app_name} [options] <profile_dir or legacy_command>
                       Default: '${iso_label}'
      -P <publisher>   Set the ISO publisher
                       Default: '${iso_publisher}'
-     -c <comp_type>   Set SquashFS compression type (gzip, lzma, lzo, xz, zstd)
-                      Default: '${sfs_comp}'
      -g <gpg_key>     Set the GPG key to be used for signing the sqashfs image
      -h               This message
      -o <out_dir>     Set the output directory
                       Default: '${out_dir}'
      -p PACKAGE(S)    Package(s) to install, can be used multiple times
-     -r <run_cmd>     Set a command to be run in chroot (only relevant for legacy 'run' command)
-                      NOTE: Deprecated, will be removed with archiso v49
-     -s <sfs_mode>    Set SquashFS image mode (img or sfs)
-                      img: prepare airootfs.sfs for dm-snapshot usage
-                      sfs: prepare airootfs.sfs for overlayfs usage
-                      Default: '${sfs_mode}'
      -v               Enable verbose output
      -w <work_dir>    Set the working directory
                       Default: '${work_dir}'
 
   profile_dir:        Directory of the archiso profile to build
-
-  legacy_command:     Legacy build.sh command
-                      NOTE: Deprecated, will be removed with archiso v49
-    init
-        initialize a chroot for building
-    install
-        install packages to the chroot
-    run
-        run a command in the chroot
-    prepare
-        cleanup and prepare the airootfs
-    pkglist
-        create a list of packages installed on the medium
-    iso
-        create the ISO
 ENDUSAGETEXT
     printf '%s' "${usagetext}"
     exit "${1}"
@@ -149,51 +126,23 @@ ENDUSAGETEXT
 # Shows configuration according to command mode.
 # $1: build_profile | init | install | run | prepare | iso
 _show_config() {
-    local _mode="$1" build_date
+    local build_date
     build_date="$(date --utc --iso-8601=seconds -d "@${SOURCE_DATE_EPOCH}")"
     _msg_info "${app_name} configuration settings"
-    [[ ! -d "${command_name}" ]] && _msg_info "           Legacy Command:   ${command_name}"
     _msg_info "             Architecture:   ${arch}"
     _msg_info "        Working directory:   ${work_dir}"
     _msg_info "   Installation directory:   ${install_dir}"
-    case "${_mode}" in
-        build_profile)
-            _msg_info "               Build date:   ${build_date}"
-            _msg_info "         Output directory:   ${out_dir}"
-            _msg_info "                  GPG key:   ${gpg_key:-None}"
-            _msg_info "                  Profile:   ${profile}"
-            _msg_info "Pacman configuration file:   ${pacman_conf}"
-            _msg_info "          Image file name:   ${img_name}"
-            _msg_info "         ISO volume label:   ${iso_label}"
-            _msg_info "            ISO publisher:   ${iso_publisher}"
-            _msg_info "          ISO application:   ${iso_application}"
-            _msg_info "               Boot modes:   ${bootmodes[*]}"
-            _msg_info "                 Packages:   ${pkg_list[*]}"
-            ;;
-        init)
-            _msg_info "Pacman configuration file:   ${pacman_conf}"
-            ;;
-        install)
-            _msg_info "                  GPG key:   ${gpg_key:-None}"
-            _msg_info "Pacman configuration file:   ${pacman_conf}"
-            _msg_info "                 Packages:   ${pkg_list[*]}"
-            ;;
-        run)
-            _msg_info "              Run command:   ${run_cmd}"
-            ;;
-        prepare)
-            _msg_info "                  GPG key:   ${gpg_key:-None}"
-            ;;
-        pkglist)
-            ;;
-        iso)
-            _msg_info "         Output directory:   ${out_dir}"
-            _msg_info "          Image file name:   ${img_name}"
-            _msg_info "         ISO volume label:   ${iso_label}"
-            _msg_info "            ISO publisher:   ${iso_publisher}"
-            _msg_info "          ISO application:   ${iso_application}"
-            ;;
-    esac
+    _msg_info "               Build date:   ${build_date}"
+    _msg_info "         Output directory:   ${out_dir}"
+    _msg_info "                  GPG key:   ${gpg_key:-None}"
+    _msg_info "                  Profile:   ${profile}"
+    _msg_info "Pacman configuration file:   ${pacman_conf}"
+    _msg_info "          Image file name:   ${img_name}"
+    _msg_info "         ISO volume label:   ${iso_label}"
+    _msg_info "            ISO publisher:   ${iso_publisher}"
+    _msg_info "          ISO application:   ${iso_application}"
+    _msg_info "               Boot modes:   ${bootmodes[*]}"
+    _msg_info "                 Packages:   ${pkg_list[*]}"
     [[ "${quiet}" == "y" ]] || printf '\n'
 }
 
@@ -202,9 +151,9 @@ _pacman() {
     _msg_info "Installing packages to '${airootfs_dir}/'..."
 
     if [[ "${quiet}" = "y" ]]; then
-        pacstrap -C "${pacman_conf}" -c -G -M -- "${airootfs_dir}" "$@" &> /dev/null
+        pacstrap -C "${work_dir}/pacman.conf" -c -G -M -- "${airootfs_dir}" "$@" &> /dev/null
     else
-        pacstrap -C "${pacman_conf}" -c -G -M -- "${airootfs_dir}" "$@"
+        pacstrap -C "${work_dir}/pacman.conf" -c -G -M -- "${airootfs_dir}" "$@"
     fi
 
     _msg_info "Done! Packages installed successfully."
@@ -246,6 +195,23 @@ _cleanup() {
     _msg_info "Done!"
 }
 
+_mkairootfs_create_image() {
+    if (( $# < 1 )); then
+        _msg_error "Function '${FUNCNAME[0]}' requires at least one argument" 1
+    fi
+
+    image_path="${isofs_dir}/${install_dir}/${arch}/airootfs.sfs"
+    if [[ "${airootfs_image_type}" =~ .*squashfs ]] ; then
+        if [[ "${quiet}" == "y" ]]; then
+            mksquashfs "$@" "${image_path}" -noappend "${airootfs_image_tool_options[@]}" -no-progress > /dev/null
+        else
+            mksquashfs "$@" "${image_path}" -noappend "${airootfs_image_tool_options[@]}"
+        fi
+    else
+        _msg_error "Unsupported image type: '${airootfs_image_type}'" 1
+    fi
+}
+
 # Makes a ext4 filesystem inside a SquashFS from a source directory.
 _mkairootfs_img() {
     if [[ ! -e "${airootfs_dir}" ]]; then
@@ -268,13 +234,7 @@ _mkairootfs_img() {
     _umount_airootfs
     install -d -m 0755 -- "${isofs_dir}/${install_dir}/${arch}"
     _msg_info "Creating SquashFS image, this may take some time..."
-    if [[ "${quiet}" = "y" ]]; then
-        mksquashfs "${airootfs_dir}.img" "${isofs_dir}/${install_dir}/${arch}/airootfs.sfs" -noappend \
-            -comp "${sfs_comp}" -no-progress > /dev/null
-    else
-        mksquashfs "${airootfs_dir}.img" "${isofs_dir}/${install_dir}/${arch}/airootfs.sfs" -noappend \
-            -comp "${sfs_comp}"
-    fi
+    _mkairootfs_create_image "${airootfs_dir}.img"
     _msg_info "Done!"
     rm -- "${airootfs_dir}.img"
 }
@@ -287,13 +247,7 @@ _mkairootfs_sfs() {
 
     install -d -m 0755 -- "${isofs_dir}/${install_dir}/${arch}"
     _msg_info "Creating SquashFS image, this may take some time..."
-    if [[ "${quiet}" = "y" ]]; then
-        mksquashfs "${airootfs_dir}" "${isofs_dir}/${install_dir}/${arch}/airootfs.sfs" -noappend \
-            -comp "${sfs_comp}" -no-progress > /dev/null
-    else
-        mksquashfs "${airootfs_dir}" "${isofs_dir}/${install_dir}/${arch}/airootfs.sfs" -noappend \
-            -comp "${sfs_comp}"
-    fi
+    _mkairootfs_create_image "${airootfs_dir}"
     _msg_info "Done!"
 }
 
@@ -321,12 +275,32 @@ _run_once() {
     fi
 }
 
-# Set up custom pacman.conf with current cache directories.
+# Set up custom pacman.conf with custom cache and pacman hook directories
 _make_pacman_conf() {
-    local _cache_dirs
-    _cache_dirs="$(pacman-conf CacheDir)"
-    sed -r "s|^#?\\s*CacheDir.+|CacheDir    = ${_cache_dirs[*]//$'\n'/ }|g" \
-        "${pacman_conf}" > "${work_dir}/pacman.conf"
+    local _cache_dirs _system_cache_dirs _profile_cache_dirs
+    _system_cache_dirs="$(pacman-conf CacheDir| tr '\n' ' ')"
+    _profile_cache_dirs="$(pacman-conf --config "${pacman_conf}" CacheDir| tr '\n' ' ')"
+
+    # only use the profile's CacheDir, if it is not the default and not the same as the system cache dir
+    if [[ "${_profile_cache_dirs}" != "/var/cache/pacman/pkg" ]] && \
+        [[ "${_system_cache_dirs}" != "${_profile_cache_dirs}" ]]; then
+        _cache_dirs="${_profile_cache_dirs}"
+    else
+        _cache_dirs="${_system_cache_dirs}"
+    fi
+
+    _msg_info "Copying custom pacman.conf to work directory..."
+    # take the profile pacman.conf and strip all settings that would break in chroot when using pacman -r
+    # see `man 8 pacman` for further info
+    pacman-conf --config "${pacman_conf}" | \
+        sed '/CacheDir/d;/DBPath/d;/HookDir/d;/LogFile/d;/RootDir/d' > "${work_dir}/pacman.conf"
+
+    _msg_info "Using pacman CacheDir: ${_cache_dirs}"
+    # append CacheDir and HookDir to [options] section
+    # HookDir is *always* set to the airootfs' override directory
+    sed "/\[options\]/a CacheDir = ${_cache_dirs}
+        /\[options\]/a HookDir = ${airootfs_dir}/etc/pacman.d/hooks/" \
+        -i "${work_dir}/pacman.conf"
 }
 
 # Prepare working directory and copy custom airootfs files (airootfs)
@@ -336,7 +310,7 @@ _make_custom_airootfs() {
     install -d -m 0755 -o 0 -g 0 -- "${airootfs_dir}"
 
     if [[ -d "${profile}/airootfs" ]]; then
-        _msg_info "Copying custom custom airootfs files and setting up user home directories..."
+        _msg_info "Copying custom airootfs files and setting up user home directories..."
         cp -af --no-preserve=ownership -- "${profile}/airootfs/." "${airootfs_dir}"
 
         [[ -e "${airootfs_dir}/etc/shadow" ]] && chmod -f 0400 -- "${airootfs_dir}/etc/shadow"
@@ -581,9 +555,9 @@ _make_efi() {
 _make_boot_on_fat() {
     local ucode_image all_ucode_images=()
     _msg_info "Preparing kernel and intramfs for the FAT file system..."
-    mmd -i "${isofs_dir}/EFI/archiso/efiboot.img" \
+    mmd -i "${work_dir}/efiboot.img" \
         "::/${install_dir}" "::/${install_dir}/boot" "::/${install_dir}/boot/${arch}"
-    mcopy -i "${isofs_dir}/EFI/archiso/efiboot.img" "${airootfs_dir}/boot/vmlinuz-"* \
+    mcopy -i "${work_dir}/efiboot.img" "${airootfs_dir}/boot/vmlinuz-"* \
         "${airootfs_dir}/boot/initramfs-"*".img" "::/${install_dir}/boot/${arch}/"
     for ucode_image in \
         "${airootfs_dir}/boot/"{intel-uc.img,intel-ucode.img,amd-uc.img,amd-ucode.img,early_ucode.cpio,microcode.cpio}
@@ -593,7 +567,7 @@ _make_boot_on_fat() {
         fi
     done
     if (( ${#all_ucode_images[@]} )); then
-        mcopy -i "${isofs_dir}/EFI/archiso/efiboot.img" "${all_ucode_images[@]}" "::/${install_dir}/boot/"
+        mcopy -i "${work_dir}/efiboot.img" "${all_ucode_images[@]}" "::/${install_dir}/boot/"
     fi
     _msg_info "Done!"
 }
@@ -602,7 +576,6 @@ _make_boot_on_fat() {
 _make_boot_uefi-x64.systemd-boot.esp() {
     local efiboot_imgsize="0"
     _msg_info "Setting up systemd-boot for UEFI booting..."
-    install -d -m 0755 -- "${isofs_dir}/EFI/archiso"
 
     # the required image size in KiB (rounded up to the next full MiB with an additional MiB for reserved sectors)
     efiboot_imgsize="$(du -bc \
@@ -619,26 +592,26 @@ _make_boot_uefi-x64.systemd-boot.esp() {
         )"
     # The FAT image must be created with mkfs.fat not mformat, as some systems have issues with mformat made images:
     # https://lists.gnu.org/archive/html/grub-devel/2019-04/msg00099.html
-    [[ -e "${isofs_dir}/EFI/archiso/efiboot.img" ]] && rm -f -- "${isofs_dir}/EFI/archiso/efiboot.img"
+    [[ -e "${work_dir}/efiboot.img" ]] && rm -f -- "${work_dir}/efiboot.img"
     _msg_info "Creating FAT image of size: ${efiboot_imgsize} KiB..."
-    mkfs.fat -C -n ARCHISO_EFI "${isofs_dir}/EFI/archiso/efiboot.img" "$efiboot_imgsize"
+    mkfs.fat -C -n ARCHISO_EFI "${work_dir}/efiboot.img" "$efiboot_imgsize"
 
-    mmd -i "${isofs_dir}/EFI/archiso/efiboot.img" ::/EFI ::/EFI/BOOT
-    mcopy -i "${isofs_dir}/EFI/archiso/efiboot.img" \
+    mmd -i "${work_dir}/efiboot.img" ::/EFI ::/EFI/BOOT
+    mcopy -i "${work_dir}/efiboot.img" \
         "${airootfs_dir}/usr/lib/systemd/boot/efi/systemd-bootx64.efi" ::/EFI/BOOT/BOOTx64.EFI
 
-    mmd -i "${isofs_dir}/EFI/archiso/efiboot.img" ::/loader ::/loader/entries
-    mcopy -i "${isofs_dir}/EFI/archiso/efiboot.img" "${profile}/efiboot/loader/loader.conf" ::/loader/
+    mmd -i "${work_dir}/efiboot.img" ::/loader ::/loader/entries
+    mcopy -i "${work_dir}/efiboot.img" "${profile}/efiboot/loader/loader.conf" ::/loader/
     for _conf in "${profile}/efiboot/loader/entries/"*".conf"; do
         sed "s|%ARCHISO_LABEL%|${iso_label}|g;
              s|%INSTALL_DIR%|${install_dir}|g;
              s|%ARCH%|${arch}|g" \
-            "${_conf}" | mcopy -i "${isofs_dir}/EFI/archiso/efiboot.img" - "::/loader/entries/${_conf##*/}"
+            "${_conf}" | mcopy -i "${work_dir}/efiboot.img" - "::/loader/entries/${_conf##*/}"
     done
 
     # shellx64.efi is picked up automatically when on /
     if [[ -e "${airootfs_dir}/usr/share/edk2-shell/x64/Shell_Full.efi" ]]; then
-        mcopy -i "${isofs_dir}/EFI/archiso/efiboot.img" \
+        mcopy -i "${work_dir}/efiboot.img" \
             "${airootfs_dir}/usr/share/edk2-shell/x64/Shell_Full.efi" ::/shellx64.efi
     fi
 
@@ -657,10 +630,12 @@ _make_boot_uefi-x64.systemd-boot.eltorito() {
 
 # Build airootfs filesystem image
 _make_prepare() {
-    if [[ "${sfs_mode}" == "sfs" ]]; then
+    if [[ "${airootfs_image_type}" == "squashfs" ]]; then # prepare airootfs.sfs for overlayfs usage (default)
         _run_once _mkairootfs_sfs
-    else
+    elif [[ "${airootfs_image_type}" == "ext4+squashfs" ]]; then # prepare airootfs.sfs for dm-snapshot usage
         _run_once _mkairootfs_img
+    else
+        _msg_error "Unsupported image type: '${airootfs_image_type}'" 1
     fi
     _mkchecksum
     if [[ "${gpg_key}" ]]; then
@@ -677,29 +652,106 @@ _make_iso() {
     if [[ "${quiet}" == "y" ]]; then
         xorrisofs_options+=('-quiet')
     fi
+
+    # xorrisofs options for x86 BIOS booting using SYSLINUX
     # shellcheck disable=SC2076
     if [[ " ${bootmodes[*]} " =~ ' bios.syslinux.' ]]; then
-        if [[ ! -f "${isofs_dir}/isolinux/isolinux.bin" ]]; then
-            _msg_error "The file '${isofs_dir}/isolinux/isolinux.bin' does not exist." 1
+
+        # SYSLINUX El Torito
+        if [[ " ${bootmodes[*]} " =~ ' bios.syslinux.eltorito ' ]]; then
+            if [[ ! -f "${isofs_dir}/isolinux/isolinux.bin" ]]; then
+                _msg_error "The file '${isofs_dir}/isolinux/isolinux.bin' does not exist." 1
+            fi
+
+            # SYSLINUX MBR
+            if [[ " ${bootmodes[*]} " =~ ' bios.syslinux.mbr ' ]]; then
+                if [[ ! -f "${isofs_dir}/isolinux/isohdpfx.bin" ]]; then
+                    _msg_error "The file '${isofs_dir}/isolinux/isohdpfx.bin' does not exist." 1
+                fi
+
+                xorrisofs_options+=(
+                    # SYSLINUX MBR bootstrap code; does not work without "-eltorito-boot isolinux/isolinux.bin"
+                    '-isohybrid-mbr' "${isofs_dir}/isolinux/isohdpfx.bin"
+                    # When GPT is used, create an additional partition in the MBR (besides 0xEE) for sectors 0–1 (MBR
+                    # bootstrap code area) and mark it as bootable
+                    # This violates the UEFI specification, but may allow booting on some systems
+                    # https://wiki.archlinux.org/index.php/Partitioning#Tricking_old_BIOS_into_booting_from_GPT
+                    '--mbr-force-bootable'
+                    # Set the ISO 9660 partition's type to "Linux filesystem data"
+                    # When only MBR is present, the partition type ID will be 0x83 "Linux" as xorriso translates all
+                    # GPT partition type GUIDs except for the ESP GUID to MBR type ID 0x83
+                    '-iso_mbr_part_type' '0FC63DAF-8483-4772-8E79-3D69D8477DE4'
+                    # Move the first partition away from the start of the ISO to match the expectations of partition
+                    # editors
+                    # May allow booting on some systems
+                    # https://dev.lovelyhq.com/libburnia/libisoburn/src/branch/master/doc/partition_offset.wiki
+                    '-partition_offset' '16'
+                )
+            fi
+
+            xorrisofs_options+=(
+                # El Torito boot image for x86 BIOS
+                '-eltorito-boot' 'isolinux/isolinux.bin'
+                # El Torito boot catalog file
+                '-eltorito-catalog' 'isolinux/boot.cat'
+                # Required options to boot with ISOLINUX
+                '-no-emul-boot' '-boot-load-size' '4' '-boot-info-table'
+            )
+        else
+            _msg_error "Using 'bios.syslinux.mbr' boot mode without 'bios.syslinux.eltorito' is not supported." 1
         fi
-        if [[ ! -f "${isofs_dir}/isolinux/isohdpfx.bin" ]]; then
-            _msg_error "The file '${isofs_dir}/isolinux/isohdpfx.bin' does not exist." 1
-        fi
-        xorrisofs_options+=(
-            '-eltorito-boot' 'isolinux/isolinux.bin'
-            '-eltorito-catalog' 'isolinux/boot.cat'
-            '-no-emul-boot' '-boot-load-size' '4' '-boot-info-table'
-            '-isohybrid-mbr' "${isofs_dir}/isolinux/isohdpfx.bin"
-        )
     fi
+
+    # xorrisofs options for X64 UEFI booting using systemd-boot
     # shellcheck disable=SC2076
     if [[ " ${bootmodes[*]} " =~ ' uefi-x64.systemd-boot.' ]]; then
-        xorrisofs_options+=(
-            '-eltorito-alt-boot'
-            '-e' 'EFI/archiso/efiboot.img'
-            '-no-emul-boot'
-            '-isohybrid-gpt-basdat'
-        )
+        if [[ ! -f "${work_dir}/efiboot.img" ]]; then
+            _msg_error "The file '${work_dir}/efiboot.img' does not exist." 1
+        fi
+        [[ -e "${isofs_dir}/EFI/archiso" ]] && rm -rf -- "${isofs_dir}/EFI/archiso"
+
+        # systemd-boot in an attached EFI system partition
+        if [[ " ${bootmodes[*]} " =~ ' uefi-x64.systemd-boot.esp ' ]]; then
+            # Move the first partition away from the start of the ISO, otherwise the GPT will not be valid and ISO 9660
+            # partition will not be mountable
+            [[ " ${xorrisofs_options[*]} " =~ ' -partition_offset ' ]] || xorrisofs_options+=('-partition_offset' '16')
+            xorrisofs_options+=(
+                # Attach efiboot.img as a second partition and set its partition type to "EFI system partition"
+                '-append_partition' '2' 'C12A7328-F81F-11D2-BA4B-00A0C93EC93B' "${work_dir}/efiboot.img"
+                # Ensure GPT is used as some systems do not support UEFI booting without it
+                '-appended_part_as_gpt'
+            )
+
+            # systemd-boot in an attached EFI system partition via El Torito
+            if [[ " ${bootmodes[*]} " =~ ' uefi-x64.systemd-boot.eltorito ' ]]; then
+                xorrisofs_options+=(
+                    # Start a new El Torito boot entry for UEFI
+                    '-eltorito-alt-boot'
+                    # Set the second partition as the El Torito UEFI boot image
+                    '-e' '--interval:appended_partition_2:all::'
+                    # Boot image is not emulating floppy or hard disk; required for all known boot loaders
+                    '-no-emul-boot'
+                )
+            fi
+        # systemd-boot in an embedded efiboot.img via El Torito
+        elif [[ " ${bootmodes[*]} " =~ ' uefi-x64.systemd-boot.eltorito ' ]]; then
+            # The ISO will not contain a GPT partition table, so to be able to reference efiboot.img, place it as a
+            # file inside the ISO 9660 file system
+            install -d -m 0755 -- "${isofs_dir}/EFI/archiso"
+            cp -a -- "${work_dir}/efiboot.img" "${isofs_dir}/EFI/archiso/efiboot.img"
+
+            xorrisofs_options+=(
+                # Start a new El Torito boot entry for UEFI
+                '-eltorito-alt-boot'
+                # Set efiboot.img as the El Torito UEFI boot image
+                '-e' 'EFI/archiso/efiboot.img'
+                # Boot image is not emulating floppy or hard disk; required for all known boot loaders
+                '-no-emul-boot'
+            )
+        fi
+
+        # Specify where to save the El Torito boot catalog file in case it is not already set by bios.syslinux.eltorito
+        [[ " ${bootmodes[*]} " =~ ' bios.' ]] || xorrisofs_options+=('-eltorito-catalog' 'EFI/boot.cat')
     fi
 
     _msg_info "Creating ISO image..."
@@ -785,60 +837,7 @@ _make_pkglist() {
     _msg_info "Done!"
 }
 
-command_pkglist() {
-    _show_config "${FUNCNAME[0]#command_}"
-    _make_pkglist
-}
-
-# Create an ISO9660 filesystem from "iso" directory.
-command_iso() {
-    bootmodes=('bios.syslinux.mbr' 'bios.syslinux.eltorito')
-
-    # If exists, add an EFI "El Torito" boot image (FAT filesystem) to ISO-9660 image.
-    if [[ -f "${isofs_dir}/EFI/archiso/efiboot.img" ]]; then
-        bootmodes+=('uefi-x64.systemd-boot.esp' 'uefi-x64.systemd-boot.eltorito')
-    fi
-
-    _show_config "${FUNCNAME[0]#command_}"
-    _make_iso
-}
-
-# create airootfs.sfs filesystem, and push it in "iso" directory.
-command_prepare() {
-    _show_config "${FUNCNAME[0]#command_}"
-
-    _cleanup
-    _make_prepare
-}
-
-# Install packages on airootfs.
-# A basic check to avoid double execution/reinstallation is done via hashing package names.
-command_install() {
-    if [[ ! -f "${pacman_conf}" ]]; then
-        _msg_error "Pacman config file '${pacman_conf}' does not exist" 1
-    fi
-
-    if (( ${#pkg_list[@]} == 0 )); then
-        _msg_error "Packages must be specified" 0
-        _usage 1
-    fi
-
-    _show_config "${FUNCNAME[0]#command_}"
-
-    _make_packages
-}
-
-command_init() {
-    _show_config "${FUNCNAME[0]#command_}"
-    _chroot_init
-}
-
-command_run() {
-    _show_config "${FUNCNAME[0]#command_}"
-    _chroot_run
-}
-
-command_build_profile() {
+_build_profile() {
     # Set up essential directory paths
     airootfs_dir="${work_dir}/${arch}/airootfs"
     isofs_dir="${work_dir}/iso"
@@ -853,7 +852,7 @@ command_build_profile() {
         printf '%s\n' "$SOURCE_DATE_EPOCH" > "${work_dir}/build_date"
     fi
 
-    _show_config "${FUNCNAME[0]#command_}"
+    _show_config
     _run_once _make_pacman_conf
     _run_once _export_gpg_publickey
     _run_once _make_custom_airootfs
@@ -866,7 +865,7 @@ command_build_profile() {
     _run_once _make_iso
 }
 
-while getopts 'p:r:C:L:P:A:D:w:o:s:c:g:vh?' arg; do
+while getopts 'p:r:C:L:P:A:D:w:o:g:vh?' arg; do
     case "${arg}" in
         p)
             read -r -a opt_pkg_list <<< "${OPTARG}"
@@ -880,8 +879,6 @@ while getopts 'p:r:C:L:P:A:D:w:o:s:c:g:vh?' arg; do
         D) override_install_dir="${OPTARG}" ;;
         w) work_dir="$(realpath -- "${OPTARG}")" ;;
         o) out_dir="$(realpath -- "${OPTARG}")" ;;
-        s) sfs_mode="${OPTARG}" ;;
-        c) sfs_comp="${OPTARG}" ;;
         g) override_gpg_key="${OPTARG}" ;;
         v) quiet="n" ;;
         h|?) _usage 0 ;;
@@ -895,7 +892,7 @@ done
 shift $((OPTIND - 1))
 
 if (( $# < 1 )); then
-    _msg_error "No command specified" 0
+    _msg_error "No profile specified" 0
     _usage 1
 fi
 
@@ -903,55 +900,14 @@ if (( EUID != 0 )); then
     _msg_error "${app_name} must be run as root." 1
 fi
 
-command_name="${1}"
+# get the absolute path representation of the first non-option argument
+profile="$(realpath -- "${1}")"
 
 # Set directory path defaults for legacy commands
 airootfs_dir="${work_dir}/airootfs"
 isofs_dir="${work_dir}/iso"
-
-case "${command_name}" in
-    init)
-        _msg_warning "The '${command_name}' command is deprecated! It will be removed with archiso v49."
-        _set_overrides
-        command_init
-        ;;
-    install)
-        _msg_warning "The '${command_name}' command is deprecated! It will be removed with archiso v49."
-        _set_overrides
-        command_install
-        ;;
-    run)
-        _msg_warning "The '${command_name}' command is deprecated! It will be removed with archiso v49."
-        command_run
-        ;;
-    prepare)
-        _msg_warning "The '${command_name}' command is deprecated! It will be removed with archiso v49."
-        _set_overrides
-        command_prepare
-        ;;
-    pkglist)
-        _msg_warning "The '${command_name}' command is deprecated! It will be removed with archiso v49."
-        command_pkglist
-        ;;
-    iso)
-        _msg_warning "The '${command_name}' command is deprecated! It will be removed with archiso v49."
-        if (( $# < 2 )); then
-            _msg_error "No image specified" 0
-            _usage 1
-        fi
-        img_name="${2}"
-        _set_overrides
-        command_iso
-        ;;
-    *)
-        # NOTE: we call read_profile here, assuming that the first non-option parameter is a profile directory
-        # This way we can retain backwards compatibility with legacy build.sh scripts until we deprecate the old way of
-        # calling mkarchiso with named parameters in v49
-        profile="$(realpath -- "${command_name}")"
-        _read_profile
-        _set_overrides
-        command_build_profile
-        ;;
-esac
+_read_profile
+_set_overrides
+_build_profile
 
 # vim:ts=4:sw=4:et:
