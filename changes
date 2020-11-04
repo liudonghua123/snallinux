@@ -1,7 +1,7 @@
 Snal Linux
 
 Wishlist
-	TODO nothing at the moment
+	TODO add copytoram option to UEFI boot
 
 Release New Version
 	DONE merge upstream changes into testing branch
@@ -12,8 +12,8 @@ Release New Version
 	DONE update README
 	DONE update home wiki page
 	DONE add version wiki page with output of pacver
-	TODO email distro@distrowatch.com and support@distrotest.net
-	TODO merge new changes into master branch
+	DONE email distro@distrowatch.com and support@distrotest.net
+	DONE merge new changes into master branch
 
 Version 1.0
 	merged upstream changes 
