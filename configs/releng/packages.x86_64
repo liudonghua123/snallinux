@@ -175,7 +175,6 @@ sdparm
 sg3_utils
 slock
 smartmontools
-<<<<<<< HEAD
 socat
 squashfs-tools
 sudo

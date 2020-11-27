@@ -1,0 +1,7 @@
+configuration {
+	modi: "run,window,ssh";
+	font: "mono 36";
+	show-icons: true;
+	terminal: "/bin/termite";
+	parse-hosts: true;
+}
