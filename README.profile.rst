@@ -9,7 +9,6 @@ An archiso profile consists of several configuration files and a directory for f
     profile
     |- airootfs/
     |- efiboot/
-    |- isolinux/
     |- syslinux/
     |- packages.arch
     |- pacman.conf
@@ -36,19 +35,25 @@ The image file is constructed from some of the variables in **profiledef.sh**: `
   directory on the resulting image into which all files will be installed (defaults to `mkarchiso`)
 * `bootmodes`: A list of strings, that state the supported boot modes of the resulting image. Only the following are
   understood:
+
   - `bios.syslinux.mbr`: Syslinux for x86 BIOS booting from a disk
   - `bios.syslinux.eltorito`: Syslinux for x86 BIOS booting from an optical disc
   - `uefi-x64.systemd-boot.esp`: Systemd-boot for x86_64 UEFI booting from a disk
   - `uefi-x64.systemd-boot.eltorito`: Systemd-boot for x86_64 UEFI booting from an optical disc
+  Note that BIOS El Torito boot mode must always be listed before UEFI El Torito boot mode.
 * `arch`: The architecture (e.g. `x86_64`) to build the image for. This is also used to resolve the name of the packages
   file (e.g. `packages.x86_64`)
 * `pacman_conf`: The `pacman.conf` to use to install packages to the work directory when creating the image (defaults to
   the host's `/etc/pacman.conf`)
 * `airootfs_image_type`: The image type to create. The following options are understood (defaults to `squashfs`):
+
   - `squashfs`: Create a squashfs image directly from the airootfs work directory
   - `ext4+squashfs`: Create an ext4 partition, copy the airootfs work directory to it and create a squashfs image from it
 * `airootfs_image_tool_options`: An array of options to pass to the tool to create the airootfs image. Currently only
   `mksquashfs` is supported - see `mksquashfs --help` for all possible options (defaults to `('-comp' 'xz')`).
+  - `file_permissions`: An associative array that lists files and/or directories who need specific ownership or
+  permissions. The array's keys contain the path and the value is a colon separated list of owner UID, owner GID and
+  access mode. E.g. `file_permissions=(["/etc/shadow"]="0:0:400")`.
 
 packages.arch
 =============
@@ -88,8 +93,9 @@ airootfs
 This - optional - directory may contain files and directories that will be copied to the work directory of the resulting
 image's root filesystem.
 The files are copied before packages are being installed to work directory location.
-Ownership of files and directories from the profile's `airootfs` directory are not preserved (permissions are currently
-the same as in the profile's `airootfs` - see `#61 <https://gitlab.archlinux.org/archlinux/archiso/-/issues/73>`_).
+Ownership and permissions of files and directories from the profile's `airootfs` directory are not preserved. The mode
+will be `644` for files and `755` for directories, all of them will be owned by root. To set custom ownership and/or
+permissions, use `file_permissions` in **profiledef.sh**.
 
 With this overlay structure it is possible to e.g. create users and set passwords for them, by providing
 `airootfs/etc/passwd`, `airootfs/etc/shadow`, `airootfs/etc/gshadow` (see `man 5 passwd`, `man 5 shadow` and `man 5
@@ -126,21 +132,13 @@ selected in **profiledef.sh**. It contains configuration for `systemd-boot
 The *custom template identifiers* are **only** understood in the boot loader entry `.conf` files (i.e. **not** in
 `loader.conf`).
 
-isolinux
---------
-
-This directory is mandatory when the `bios.syslinux.eltorito` bootmode is selected in **profiledef.sh**.
-It contains configuration for `isolinux <https://wiki.syslinux.org/wiki/index.php?title=ISOLINUX>`_ used in the resuling
-image.
-
-The *custom template identifiers* are understood in all `.cfg` files in this directory.
-
 syslinux
 --------
 
 This directory is mandatory when the `bios.syslinux.mbr` or the `bios.syslinux.eltorito` bootmodes are selected in
 **profiledef.sh**.
-It contains configuration files for `syslinux <https://wiki.syslinux.org/wiki/index.php?title=SYSLINUX>`_ or `pxelinux
+It contains configuration files for `syslinux <https://wiki.syslinux.org/wiki/index.php?title=SYSLINUX>`_ or `isolinux
+<https://wiki.syslinux.org/wiki/index.php?title=ISOLINUX>`_ , or `pxelinux
 <https://wiki.syslinux.org/wiki/index.php?title=PXELINUX>`_ used in the resuling image.
 
 The *custom template identifiers* are understood in all `.cfg` files in this directory.
