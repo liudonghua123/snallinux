@@ -23,6 +23,7 @@ chrony
 clonezilla
 clusterssh
 coreutils
+cloud-init
 crda
 curl
 darkhttpd
@@ -176,6 +177,7 @@ sg3_utils
 slock
 smartmontools
 socat
+sof-firmware
 squashfs-tools
 sudo
 sxiv
@@ -194,6 +196,7 @@ unrar
 unzip
 udftools
 usb_modeswitch
+usbmuxd
 usbutils
 vim
 vnstat

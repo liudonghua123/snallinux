@@ -20,7 +20,8 @@ check: lint
 
 lint:
 	shellcheck -s bash archiso/mkarchiso \
-	                   scripts/run_archiso.sh \
+	                   $(wildcard scripts/*.sh) \
+	                   $(wildcard .gitlab/ci/*.sh) \
 	                   $(INSTALL_FILES) \
 	                   $(wildcard configs/*/build.sh) \
 	                   $(wildcard configs/*/profiledef.sh) \
