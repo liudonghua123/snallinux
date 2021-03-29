@@ -141,7 +141,6 @@ ngrep
 nilfs-utils
 nmap
 ntfs-3g
-ntop
 ntp
 nvme-cli
 openconnect
@@ -161,7 +160,6 @@ qiv
 qutebrowser
 ranger
 rdesktop
-refind-efi
 reflector
 reiserfsprogs
 ristretto
