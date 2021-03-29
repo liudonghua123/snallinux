@@ -1,13 +1,10 @@
 Snal Linux
 
 Wishlist
-	TODO use termite in launcher instead of xterm
-	TODO add (commented out) line to .xinitrc to start xfce
-	TODO add other useful bash scripts to /usr/local/bin
 
 Release New Version
-	TODO merge upstream changes into testing branch
-	TODO update configs/releng/profiledef.sh to new version
+	DONE merge upstream changes into testing branch
+	DONE update configs/releng/profiledef.sh to new version
 	TODO build new ISO
 	TODO test new ISO
 	TODO upload new ISO
@@ -18,6 +15,9 @@ Release New Version
 	TODO merge new changes into master branch
 
 Version 1.3
+	merged upstream changes
+	added (commented out) line to .xinitrc to start xfce
+	added and updated bash scripts in /usr/local/bin
 
 Version 1.2
 	merged upstream changes
