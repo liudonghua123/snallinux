@@ -1,0 +1,8 @@
+#!/bin/bash
+# a simple bash script to cut cols and pipe to less
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+COLS=$((`tput cols` - 3))
+
+cut -c 1-$COLS $1 $2 $3 $4 $5 $6 $7 $8 $9 | less

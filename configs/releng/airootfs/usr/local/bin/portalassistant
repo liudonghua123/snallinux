@@ -1,6 +1,7 @@
 #!/bin/bash
-# portalassistant - written by Jeremy Wakeman
-# a script for checking if you are behind a captive portal
+# a simple bash script to check if you are behind a captive portal
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 
 BROWSER="firefox --new-tab http://neverssl.com"

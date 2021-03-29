@@ -1,9 +1,29 @@
 #!/bin/bash
+# a simple bash script to check a server until it is up
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 bell=0
 options=0
 port=0
 wait=0
+
+# if help is requested, show usage and options
+if [[ "$*"" == " ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+	exec_name=`basename $0`
+	echo "Usage: $exec_name [OPTION] <server>"
+	echo "check a server until it is up"
+	echo ""
+	echo "  -b,         bell when connecting"
+	echo "  -h, --help  display this help and exit"
+	echo "  -p [port]   check alternate port"
+	echo "  -w          wait 30 seconds between ping and connect"
+	echo ""
+	echo "Examples:"
+	echo "  $exec_name -bw 192.168.0.1   use bell and wait, check 192.168.0.1"
+	echo "  $exec_name 192.168.0.1 | netctl stop wlan-home   check 192.168.0.1, then stop wifi"
+	exit 0
+fi
 
 # if options are passed, parse them
 if [[  $1 =~ - ]] ; then

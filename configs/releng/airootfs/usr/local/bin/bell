@@ -1,0 +1,9 @@
+#!/bin/bash
+# a simple bash script to bell
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+echo -e '\a'
+sleep .1
+echo -e '\a'
+sleep .1

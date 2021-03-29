@@ -1,4 +1,7 @@
 #!/bin/bash
+# a simple bash script to lock screen using i3lock 
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 snal_lock=".snal_lock.png"
 

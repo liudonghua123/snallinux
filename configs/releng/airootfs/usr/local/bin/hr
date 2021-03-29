@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# a simple bash script output a horizontal rule 
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 enter=0
 
@@ -8,11 +11,6 @@ if [[  $1 =~ - ]] ; then
 		enter=1
 	fi
 	shift
-fi
-
-if [[ $enter -eq 1 ]] ; then
-	echo -n "press enter to continue..."
-	read x
 fi
 
 COLS="$(tput cols)"
@@ -39,6 +37,9 @@ hrs() {
     for WORD in "${@:-#}"
     do
         hr "$WORD"
+		if [[ $enter -eq 1 ]] ; then
+			read x
+		fi
     done
 }
 

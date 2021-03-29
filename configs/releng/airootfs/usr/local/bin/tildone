@@ -1,4 +1,7 @@
 #!/bin/bash
+# a simple bash script to run a command until it succeeds
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 numtries=99
 waittime=1
@@ -19,6 +22,21 @@ done
 if [ "$*" == "" ] ; then
 	echo "Usage: tildone [-n numtries] [-w waittime] [command to run]"
 	exit 1
+fi
+
+# if help is requested, show usage and options
+if [[ "$*"" == " ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+	exec_name=`basename $0`
+	echo "Usage: $exec_name [OPTION] <command>"
+	echo "connect to a server if it is up"
+	echo ""
+	echo "  -h, --help  display this help and exit"
+	echo "  -n [num]    number of tries"
+	echo "  -w [num]    wait seconds between tries"
+	echo ""
+	echo "Examples:"
+	echo "  $exec_name -n 10  umount /mnt  umount /mnt 10 times (until it succeeds)"
+	exit 0
 fi
 
 run=$*

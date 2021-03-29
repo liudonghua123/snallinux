@@ -1,4 +1,7 @@
 #!/bin/bash
+# a simple bash script to head lines on screen
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 LINES=$((`tput lines` - 4))
 

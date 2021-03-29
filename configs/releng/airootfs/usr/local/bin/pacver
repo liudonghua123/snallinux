@@ -1,4 +1,7 @@
 #!/bin/bash
+# a simple bash script to get versions of installed packages
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 TEMPFILE="/tmp/pacver.temp"
 
