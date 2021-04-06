@@ -12,7 +12,11 @@ Release New Version
 	DONE update home wiki page
 	DONE add version wiki page with output of pacver
 	DONE email distro@distrowatch.com and support@distrotest.net
-	TODO merge new changes into master branch
+	DONE merge new changes into master branch
+
+Version 1.4
+	merged upstream changes
+	fixed borked bash scripts in /usr/local/bin
 
 Version 1.3
 	merged upstream changes

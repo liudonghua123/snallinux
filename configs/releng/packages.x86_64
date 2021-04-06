@@ -5,6 +5,7 @@ alsa-plugins
 alsa-utils
 amd-ucode
 arandr
+archinstall
 arch-install-scripts
 arch-wiki-lite
 b43-fwcutter
@@ -127,6 +128,7 @@ mousepad
 mpd
 mpg123
 mpv
+modemmanager
 mtools
 mtr
 multitail

@@ -11,7 +11,7 @@ telnet=0
 options=0
 
 # if help is requested, show usage and options
-if [[ "$*"" == " ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [[ "$*" == "" ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
 	exec_name=`basename $0`
 	echo "Usage: $exec_name [OPTION] <server>"
 	echo "connect to a server if it is up"
