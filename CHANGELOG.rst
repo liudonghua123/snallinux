@@ -2,6 +2,39 @@
 Changelog
 #########
 
+[56.1] - 2021-07-11
+===================
+
+Added
+-----
+
+Changed
+-------
+
+- Simplify gitlab CI setup by using ci-scripts (shared amongst several projects)
+- Fix an issue with the unsetting of environment variables before using pacstrap/arch-chroot
+- Remove termite-terminfo from the releng profile's list of packages (it is not in the official repositories anymore)
+- Set LC_ALL instead of LANG
+
+[56] - 2021-07-01
+=================
+
+Added
+-----
+
+- Add pacman >= 6 compatible configuration
+- Add documentation for the `script` boot parameter
+
+Changed
+-------
+
+- Clear environment variables before working in chroot
+- Update Arch Wiki URLs
+- Pass SOURCE_DATE_EPOCH to chroot
+- Enable parallel downloads in profile pacman configurations
+- Generalize the approach of interacting with ucode images
+- Execute the netboot build mode for the baseline profile in CI
+
 [55] - 2021-06-01
 =================
 
