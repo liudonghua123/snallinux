@@ -11,6 +11,7 @@ iso_publisher="Snal Linux <https://sourceforge.net/projects/snallinux/>"
 iso_application="Snal Linux"
 iso_version="$BUILD"
 install_dir="arch"
+buildmodes=('iso')
 bootmodes=('bios.syslinux.mbr' 'bios.syslinux.eltorito' 'uefi-x64.systemd-boot.esp' 'uefi-x64.systemd-boot.eltorito')
 arch="x86_64"
 pacman_conf="pacman.conf"

@@ -15,7 +15,6 @@ bash
 bash-completion
 bc
 bind-tools
-bitlbee
 bmon
 brltty
 broadcom-wl
@@ -28,6 +27,7 @@ cloud-init
 clusterssh
 coreutils
 crda
+cryptsetup
 curl
 darkhttpd
 ddrescue
@@ -39,7 +39,6 @@ dillo
 dmenu
 dmraid
 dnsmasq
-dnstracer
 dos2unix
 dosbox
 dosfstools
@@ -105,6 +104,8 @@ kismet
 kitty-terminfo
 less
 lftp
+libfido2
+libusb-compat
 links
 linux
 linux-atm
@@ -158,10 +159,13 @@ partclone
 parted
 partimage
 pcmanfm
+pcsclite
 perl-math-round
 pkgfile
 ppp
 pptpclient
+pv
+qemu-guest-agent
 qiv
 qutebrowser
 ranger
@@ -193,6 +197,8 @@ termite
 termite-terminfo
 testdisk
 tigervnc
+tmux
+tpm2-tss
 tty-clock
 udftools
 unison
@@ -202,6 +208,7 @@ usb_modeswitch
 usbmuxd
 usbutils
 vim
+virtualbox-guest-utils-nox
 vlc
 vnstat
 vpnc

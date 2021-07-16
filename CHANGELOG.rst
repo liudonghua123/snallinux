@@ -2,6 +2,70 @@
 Changelog
 #########
 
+[55] - 2021-06-01
+=================
+
+Added
+-----
+
+- Add integration for pv when using the copytoram boot parameter so that progress on copying the image to RAM is shown
+- Add experimental support for EROFS by using it for the rootfs image in the baseline profile
+
+Changed
+-------
+
+- Change information on IRC channel, as Arch Linux moved to Libera Chat
+- Fix a regression, that would prevent network interfaces to be configured under certain circumstances
+
+[54] - 2021-05-13
+=================
+
+Added
+-----
+
+- Add the concept of buildmodes to mkarchiso, which allows for building more than the default .iso artifact
+  (sequentially)
+- Add support to mkarchiso and both baseline and releng profiles for building a bootstrap image (a compressed
+  bootstrapped Arch Linux environment), by using the new buildmode `bootstrap`
+- Add support to mkarchiso and both baseline and releng profiles for building artifacts required for netboot with iPXE
+  (optionally allowing codesigning on the artifacts), by using the new buildmode `netboot`
+- Add qemu-guest-agent and virtualbox-guest-utils-nox to the releng profile and enable their services by default to
+  allow interaction between hypervisor and virtual machine if the installation medium is booted in a virtualized
+  environment
+
+Changed
+-------
+
+- Always use the .sig file extension when signing the rootfs image, as that is how mkinitcpio-archiso expects it
+- Fix for CI and run_archiso scripts to be compatible with QEMU >= 6.0
+- Increase robustness of CI by granting more time to reach the first prompt
+- Change CI to build all available buildmodes of the baseline and releng profiles (baseline's netboot is currently
+  excluded due to a bug)
+- Install all implicitly installed packages explicitly for the releng profile
+- Install keyrings more generically when using pacman-init.service
+- Consolidate CI scripts so that they may be shared between the archiso, arch-boxes and releng project in the future and
+  expose their configuration with the help of environment variables
+
+[53] - 2021-05-01
+=================
+
+Added
+-----
+
+- Add ISO name to grubenv
+- Add further metrics to CI, so that number of packages and further image sizes can be tracked
+- Add IMAGE_ID and IMAGE_VERSION to /etc/os-release
+
+Changed
+-------
+
+- Revert to an invalid GPT for greater hardware compatibility
+- Fix CI scripts and initcpio script to comply with stricter shellcheck
+- Fix an issue where writing to /etc/machine-id might override a file outside of the build directory
+- Change gzip flags, so that compressed files are created reproducibly
+- Increase default serial baud rate to 115200
+- Remove deprecated documentation and format existing documentation
+
 [52] - 2021-04-01
 =================
 

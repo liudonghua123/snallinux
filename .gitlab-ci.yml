@@ -5,6 +5,12 @@
 default:
   image: "archlinux:latest"
 
+variables:
+  BUILD_SCRIPT: ./.gitlab/ci/build-inside-vm.sh
+  QEMU_BUILD_TIMEOUT: 2400
+  QEMU_VM_MEMORY: 3072
+  ARCHISO_COW_SPACE_SIZE: 2g
+
 stages:
   - lint
   - build
@@ -17,16 +23,15 @@ shellcheck:
     - make lint
 
 .build:
+  variables:
+    PACKAGE_LIST: dosfstools e2fsprogs erofs-utils jq libisoburn mtools openssl qemu-headless squashfs-tools zsync
   stage: build
   before_script:
-    - pacman -Syu --needed --noconfirm qemu-headless libisoburn
+    - pacman -Syu --needed --noconfirm qemu-headless
   script:
     - ./.gitlab/ci/build-host.sh
   after_script:
-    - echo "image_size_mebibytes{image=\"${PROFILE}\"} $(du -m output/${PROFILE}/*iso)" > metrics.txt
-  parallel:
-    matrix:
-      - PROFILE: [baseline, releng]
+    - PROFILE=($BUILD_SCRIPT_ARGS) && cp -- "output/${PROFILE[0]}/metrics.txt" .
   artifacts:
     name: "output"
     paths:
@@ -35,20 +40,21 @@ shellcheck:
     reports:
       metrics: metrics.txt
 
-build:
+build_short:
+  extends: .build
+  parallel:
+    matrix:
+      # baseline does not support netboot with codesinging
+      # https://gitlab.archlinux.org/archlinux/archiso/-/issues/132
+      - BUILD_SCRIPT_ARGS: baseline bootstrap
+      - BUILD_SCRIPT_ARGS: releng bootstrap
+
+build_long:
   extends: .build
   tags:
     - fast-single-thread
-  except:
-    - master@archlinux/archiso
-    - schedules@archlinux/archiso
-    - tags@archlinux/archiso
-
-build:secure:
-  extends: .build
-  tags:
-    - secure
-  only:
-    - master@archlinux/archiso
-    - schedules@archlinux/archiso
-    - tags@archlinux/archiso
+  parallel:
+    matrix:
+      - BUILD_SCRIPT_ARGS: baseline iso
+      - BUILD_SCRIPT_ARGS: releng iso
+      - BUILD_SCRIPT_ARGS: releng netboot

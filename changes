@@ -1,18 +1,23 @@
 Snal Linux
 
 Wishlist
+	automatically ip link set wlan0 down
+	fix /usr/local/bin/locker to use /home/snal/.snal_lock.png and tiling
 
 Release New Version
-	TODO merge upstream changes into testing branch
-	TODO update configs/releng/profiledef.sh to new version
-	TODO build new ISO
-	TODO test new ISO
-	TODO upload new ISO
-	TODO update README
-	TODO update home wiki page
-	TODO add version wiki page with output of pacver
-	TODO email distro@distrowatch.com and support@distrotest.net
-	TODO merge new changes into master branch
+	merge upstream changes into testing branch
+	update configs/releng/profiledef.sh to new version
+	build new ISO
+	test new ISO
+	upload new ISO
+	update README
+	update home wiki page
+	add version wiki page with output of pacver
+	email distro@distrowatch.com and support@distrotest.net
+	merge new changes into master branch
+
+Version 1.5
+	merged upstream changes
 
 Version 1.4
 	merged upstream changes
