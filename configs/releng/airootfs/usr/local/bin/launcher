@@ -3,5 +3,5 @@
 # written by Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-#xterm -fa "andale" -fs 36 -rv -geometry "40x10+0+62" -T "launcher"
-termite -t "launcher" -c ~/.config/termite/alt.config
+xterm -fa "andale" -fs 36 -rv -geometry "40x6+124+124" -T "launcher"
+#termite -t "launcher" -c ~/.config/termite/alt.config

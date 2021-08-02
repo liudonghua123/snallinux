@@ -1,9 +1,5 @@
 Snal Linux
 
-Wishlist
-	automatically ip link set wlan0 down
-	fix /usr/local/bin/locker to use /home/snal/.snal_lock.png and tiling
-
 Release New Version
 	merge upstream changes into testing branch
 	update configs/releng/profiledef.sh to new version
@@ -15,6 +11,12 @@ Release New Version
 	add version wiki page with output of pacver
 	email distro@distrowatch.com and support@distrotest.net
 	merge new changes into master branch
+
+Version 1.6
+    merged upstream changes
+    terminal and launcher now use xterm because termite was removed upstream
+    removed duplicate boot entry
+    fixed /usr/local/bin/locker
 
 Version 1.5
 	merged upstream changes

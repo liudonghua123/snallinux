@@ -175,6 +175,7 @@ ristretto
 rofi
 rp-pppoe
 rsync
+rxvt-unicode
 rxvt-unicode-terminfo
 screen
 screenfetch
@@ -193,8 +194,6 @@ sysstat
 systemd-resolvconf
 tcpdump
 terminus-font
-termite
-termite-terminfo
 testdisk
 tigervnc
 tmux
