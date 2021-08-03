@@ -1,0 +1,52 @@
+#!/bin/bash
+# a simple bash script to "ping" a port 
+# written by Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+loop=0
+port=22
+options=0
+
+# if help is requested, show usage and options
+if [[ "$*" == "" ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+	exec_name=`basename $0`
+	echo "Usage: $exec_name [OPTION] <server>"
+	echo "check if a server is up"
+	echo ""
+	echo "  -h, --help  display this help and exit"
+	echo "  -l          loop"
+	echo "  -p [port]   check alternate port"
+	echo ""
+	echo "Examples:"
+	echo "  $exec_name -lp 23 192.168.0.1   check port 23 on a loop"
+	exit 0
+fi
+
+# if options are passed, parse them
+if [[  $1 =~ - ]] ; then
+	if [[ $1 =~ l ]] ; then
+		loop=1
+	fi
+	if [[ $1 =~ p ]] ; then
+		port=$2
+		shift
+	fi
+	shift
+fi
+
+# parse address or hostname to check
+host=$1
+shift
+
+runonce=1
+while [[ $loop -eq 1 ]] || [[ $runonce -eq 1 ]] ; do
+	ipup=0
+	numtries=0
+	nc -zw 2 $host $port 2>/dev/null && ipup=1
+    if [[ $ipup -eq 1 ]] ; then
+        echo "$host is up on port $port"
+    else
+        echo "no response from $host on port $port"
+    fi
+	runonce=0
+done
