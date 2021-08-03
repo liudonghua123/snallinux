@@ -1,7 +1,7 @@
 configuration {
 	modi: "run,window,ssh";
-	font: "mono 36";
+	font: "mono 20";
 	show-icons: true;
-	terminal: "/bin/termite";
+	terminal: "/bin/lxterminal";
 	parse-hosts: true;
 }

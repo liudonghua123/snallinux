@@ -3,6 +3,7 @@
 alsa-lib
 alsa-plugins
 alsa-utils
+alacritty
 amd-ucode
 arandr
 arch-install-scripts
