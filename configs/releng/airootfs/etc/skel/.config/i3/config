@@ -30,8 +30,8 @@ for_window [title="^launcher$"] floating enable
 for_window [title="^launcher$"] border pixel 1
 
 # Basic keys
-#bindsym $mod+Return exec termite -t termite -e "bash -l"
-bindsym $mod+Return exec xterm -fa "andale" -rv -ls
+#bindsym $mod+Return exec xterm -fa "andale" -rv -ls
+bindsym $mod+Return exec lxterminal -t lxterminal -l 
 bindsym $mod+d exec rofi -show run
 bindsym $mod+shift+d exec i3-input -f "pango:monospace 32"
 bindsym $mod+q kill
