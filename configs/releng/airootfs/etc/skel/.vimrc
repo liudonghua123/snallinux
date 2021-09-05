@@ -7,6 +7,7 @@ set incsearch
 set showmatch
 set autowrite
 set wrap
+set expandtab
 set linebreak
 set nolist
 set textwidth=0

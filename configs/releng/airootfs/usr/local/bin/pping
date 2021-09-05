@@ -49,4 +49,7 @@ while [[ $loop -eq 1 ]] || [[ $runonce -eq 1 ]] ; do
         echo "no response from $host on port $port"
     fi
 	runonce=0
+    if [[ $loop -eq 1 ]] ; then
+        sleep 2
+    fi
 done
