@@ -2,6 +2,51 @@
 Changelog
 #########
 
+[58] - 2021-08-25
+=================
+
+Added
+-----
+
+- Add support for ``gpg``'s ``--sender`` option
+
+Changed
+-------
+
+- Change the way ``mkarchiso`` uses ext4 images to copying files to it directly instead of mounting (this action now
+  does not require elevated privileges anymore)
+- Add version files when using ``netboot`` buildmode as well
+- Update the sshd configuration to be compatible with openssh 8.7p1
+- Overhaul the used ``gpg`` options
+- Fix use of potentially unbound variables
+- Refactor the validation functions to have fewer large functions and less code duplication
+
+Removed
+-------
+
+- Remove all files related to ``mkinitcpio`` integration, as they now live in
+  https://gitlab.archlinux.org/mkinitcpio/mkinitcpio-archiso
+
+[57] - 2021-07-30
+=================
+
+Added
+-----
+
+- Add a missing line in the systemd-networkd-wait-online.service in the baseline profile
+
+Changed
+-------
+
+- Adapt systemd-networkd configuration to systemd ≥ 249
+- Improve documentation in ``mkarchiso`` and systemd-networkd related configuration files
+- Fix an issue that may prevent continuing an aborted build of the ``netboot`` or ``iso`` buildmode
+
+Removed
+-------
+
+- Remove SPDX license identifier from files that are not eligible for copyright (e.g. configuration files)
+
 [56.1] - 2021-07-11
 ===================
 

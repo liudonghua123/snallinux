@@ -12,9 +12,14 @@ Release New Version
 	email distro@distrowatch.com and support@distrotest.net
 	merge new changes into master branch
 
+Version 1.8
+    merged upstream changes
+    minor updates to lxterminal configs
+
 Version 1.7
     merged upstream changes
-    terminal and launcher now use lxterminal because it is easier to configure than xterm
+    standard terminal is lxterminal because it is easier to configure than xterm
+    launcher uses xterm so that font size can be specified with option
 
 Version 1.6
     merged upstream changes
