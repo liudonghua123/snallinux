@@ -12,6 +12,9 @@ Release New Version
 	email distro@distrowatch.com and support@distrotest.net
 	merge new changes into master branch
 
+Version 1.9
+    minor updates to UEFI boot options
+
 Version 1.8
     merged upstream changes
     minor updates to lxterminal configs

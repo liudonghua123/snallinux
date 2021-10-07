@@ -4,6 +4,8 @@
 # set background
 exec feh --bg-max .snal_background.png --image-bg black
 
+# set screen blanking
+exec xset dpms 600 600 600
 # start screenlocker
 exec xautolock -time 30 -locker /usr/local/bin/locker
 
@@ -31,7 +33,7 @@ for_window [title="^launcher$"] border pixel 1
 
 # Basic keys
 #bindsym $mod+Return exec xterm -fa "andale" -rv -ls
-bindsym $mod+Return exec lxterminal -t lxterminal -l 
+bindsym $mod+Return exec lxterminal -t lxterminal
 bindsym $mod+d exec rofi -show run
 bindsym $mod+shift+d exec i3-input -f "pango:monospace 32"
 bindsym $mod+q kill

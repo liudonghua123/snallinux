@@ -19,7 +19,7 @@ DARK='[1;30m'
 NC='[0m'         # No Color
 
 # variables
-export BROWSER="firefox"
+export BROWSER="chromium"
 export EDITOR="vim"
 export TERMINAL="lxterminal"
 export FCEDIT="/usr/bin/vim"
@@ -28,9 +28,10 @@ export HISTFILESIZE=10000
 export HISTIGNORE="&:bg:fg:la:ll:lla:llp:llap:ls:exit:exit *:h"
 export HISTSIZE=10000
 export MAILCHECK=1
+export QT_QPA_PLATFORMTHEME="qt5ct"
 export TERM
 
-export PATH="~/.bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+export PATH="~/.bin:/bin:/usr/bin:/usr/bin/core_perl:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
 #export PS1="\[$NC\]\u@\h(\[$RED\]\W\[$NC\])\\$ "
 export PS1='$( code="$?" ; if [ "$code" -ne "0" ] ; then echo -n "\[$red\]$code " ; fi)$( echo -n \[$NC\] )\u@\h($( echo -n \[$RED\] )\W$( echo -n \[$NC\] ))\$$( echo -n \[$NC\] ) '
 
@@ -68,61 +69,4 @@ if ! shopt -oq posix; then
   elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
   fi
-fi
-
-# start screen if interactive
-if [[ $- == *i* ]] ; then
-    # cwmwl and amddim do not have X installed
-    if [[ `hostname` == "cwmwl" ]] || [[ `hostname` == "amddim" ]] ; then
-    	if [[ "$TERM" == "linux" ]] ; then
-    		echo -n "run screen [Y/n/x]? "
-    		read x
-    		if [ "$x" == "x" ] ; then
-    			screen -x main || screen -S main
-    			exit
-    		elif [ "$x" != "n" ] ; then
-    			screen -raAd main || screen -S main
-    			exit
-    		fi
-    	elif [[ "$TERM" =~ "screen" ]] ; then
-    		echo "already in screen" >> /dev/null
-    	elif [[ "$TERM" =~ "xterm" ]] ; then
-    		echo -n "run screen [Y/n/x]? "
-    		read x
-    		if [ "$x" == "x" ] ; then
-    			screen -x main || screen -S main
-    			exit
-    		elif [ "$x" != "n" ] ; then
-    			screen -raAd main || screen -S main
-    			exit
-    		fi
-    	fi
-    else
-    	# other hosts run startx in linux term
-    	if [[ "$TERM" == "linux" ]] ; then
-    		echo -n "run startx [Y/n/s/x]? "
-    		read x
-    		if [ "$x" == "s" ] ; then
-    			screen -raAd main || screen -S main
-    			exit
-    		elif [ "$x" == "x" ] ; then
-    			screen -x main || screen -S main
-    			exit
-    		elif [ "$x" != "n" ] ; then
-    			startx
-    		fi
-    	elif [[ "$TERM" =~ "screen" ]] ; then
-    		echo "already in screen" >> /dev/null
-    	elif [[ "$TERM" =~ "xterm" ]] ; then
-    		echo -n "run screen [Y/n/x]? "
-    		read x
-    		if [ "$x" == "x" ] ; then
-    			screen -x main || screen -S main
-    			exit
-    		elif [ "$x" != "n" ] ; then
-    			screen -raAd main || screen -S main
-    			exit
-    		fi
-    	fi
-    fi
 fi
