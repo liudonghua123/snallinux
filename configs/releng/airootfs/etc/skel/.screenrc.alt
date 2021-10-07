@@ -3,7 +3,8 @@ vbell on
 activity '^GActivity in window %'
 
 hardstatus alwayslastline
-hardstatus string '%{= dd}%c %06=%-Lw%40L>%{+b}%n*%f%t%{-}%+Lw%<'
+#hardstatus string '%{= dd}%c %06=%-Lw%40L>%{+b}%n*%f%t%{-}%+Lw%<'
+hardstatus string '%{= dd}%c %06=%-Lw%40L>%{+b}%n*%f%t%{-}%+Lw%<%=%H'
 
 blankerprg tty-clock -cs 
 idle 300
