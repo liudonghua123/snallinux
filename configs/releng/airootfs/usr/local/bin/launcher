@@ -4,4 +4,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 #lxterminal -t launcher --geometry=40x6
-xterm -fa "andale" -fs 28 -rv -geometry "40x3" -T "launcher"
+xterm -fa "andale" -fs 28 -rv -geometry "40x3" -T "launcher" -e "/bin/bash --rcfile ~/.bashrc.alt"

@@ -9,10 +9,14 @@ Release New Version
 	update README
 	update home wiki page
 	add version wiki page with output of pacver
-	email distro@distrowatch.com and support@distrotest.net
 	merge new changes into master branch
 
+Version 1.10
+    added hostname to gnuscreen status line
+    added rustup package
+
 Version 1.9
+    fixed .bashrc and .bash_profile logic
     minor updates to UEFI boot options
 
 Version 1.8

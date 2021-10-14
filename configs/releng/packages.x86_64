@@ -4,7 +4,6 @@ alsa-utils
 amd-ucode
 arandr
 arch-install-scripts
-arch-wiki-lite
 archinstall
 aria2
 b43-fwcutter
@@ -173,8 +172,7 @@ ristretto
 rofi
 rp-pppoe
 rsync
-rxvt-unicode
-rxvt-unicode-terminfo
+rustup
 screen
 screenfetch
 scrot
