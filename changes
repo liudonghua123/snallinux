@@ -11,6 +11,9 @@ Release New Version
 	add version wiki page with output of pacver
 	merge new changes into master branch
 
+Version 1.11
+    software version updates
+
 Version 1.10
     added hostname to gnuscreen status line
     added rustup package
