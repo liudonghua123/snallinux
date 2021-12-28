@@ -44,7 +44,6 @@ e2fsprogs
 edk2-shell
 efibootmgr
 elinks
-espeakup
 etherape
 ethtool
 ettercap
@@ -73,6 +72,7 @@ gptfdisk
 grep
 grml-zsh-config
 gzip
+hashcat
 haveged
 hdparm
 hping
@@ -97,7 +97,9 @@ irssi
 iw
 iwd
 jfsutils
+john
 kismet
+lastpass-cli
 less
 lftp
 libfido2
@@ -111,6 +113,7 @@ lsof
 lsscsi
 lvm2
 lxterminal
+lynis
 lynx
 make
 man-db
@@ -118,6 +121,7 @@ man-pages
 mc
 mdadm
 memtest86+
+metasploit
 midori
 mkinitcpio
 mkinitcpio-archiso
@@ -168,7 +172,6 @@ qutebrowser
 ranger
 reflector
 reiserfsprogs
-ristretto
 rofi
 rp-pppoe
 rsync
@@ -217,9 +220,6 @@ wireshark-cli
 wpa_supplicant
 wvdial
 xautolock
-xfce4
-xfce4-goodies
-xfmpc
 xfsprogs
 xl2tpd
 xorg-drivers
@@ -241,7 +241,5 @@ xorg-xwininfo
 xscreensaver
 xsel
 xterm
-zathura
-zathura-pdf-mupdf
 zip
 zsh

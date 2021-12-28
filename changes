@@ -11,6 +11,10 @@ Release New Version
 	add version wiki page with output of pacver
 	merge new changes into master branch
 
+Version 1.12
+    added hashcat, john, lastpass-cli, lynix, and metasploit
+    removed espeakup, ristretto, xfce4 (and related), zathura (and related)
+
 Version 1.11
     software version updates
 
