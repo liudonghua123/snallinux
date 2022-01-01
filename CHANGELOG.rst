@@ -2,6 +2,58 @@
 Changelog
 #########
 
+[XX] - YYYY-MM-DD
+=================
+
+Added
+-----
+
+Changed
+-------
+
+Removed
+-------
+
+[60] - 2021-12-28
+=================
+
+Added
+-----
+
+- Add `BB8E6F1B81CF0BB301D74D1CBF425A01E68B38EF` in the Releases section of the README, giving maintainer power to
+  nl6720.
+
+Changed
+-------
+
+- Show a more descriptive message when no code signing certificate is used
+
+Removed
+-------
+
+- Remove unused archiso_shutdown hook from the releng profile's mkinitcpio config
+
+[59] - 2021-11-30
+=================
+
+Added
+-----
+
+- Add mailmap file for easier author integration with git
+- Add grub and refind to the package list of the releng profile
+
+Changed
+-------
+
+- Replace use of date with printf
+- Silence command output more efficiently when using --quiet
+- Modify curl call to retry up to ten times before giving up on downloading an automated script
+
+Removed
+-------
+
+- Remove requirement on setting a Boot mode when building a netboot image
+
 [58] - 2021-08-25
 =================
 

@@ -24,8 +24,6 @@ Entering "n" will run a bash shell.
 Entering "s" will attach an existing screen session or start a new one.
 Entering "x" will join an existing screen session.
 
-xfce is also available. To use xfce, do not start XWindows, edit /home/snal/.xinitrc to exec startxfce4 instead of i3, then start XWindows.
-
 
 Graphical Interface
 The default Snal interface is the i3 window manager. Key bindings are shown on the background image and can be changed by editing /home/snal/.config/i3/config.
