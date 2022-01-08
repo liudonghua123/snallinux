@@ -432,6 +432,13 @@ _make_customize_airootfs() {
             _msg_info "Adding version $BUILD to /etc/snal-release..."
             echo $BUILD > "${pacstrap_dir}/etc/snal-release"
         fi
+        # modify /usr/local/bin/pacver
+        if [[ -e "${pacstrap_dir}/usr/local/bin/pacver" ]] && [[ -e "${packages}" ]] ; then
+            _msg_info "Creating package list"
+            cat ${packages} | tr '\n' ' ' | sed -e "s/^/   packages=\"/" -e "s/ $/\"\n/" >> /tmp/packages.txt
+            _msg_info "Adding packages to /usr/local/bin/pacver"
+            sed -i -e '/PACKAGES/{r /tmp/packages.txt' -e 'd}' "${pacstrap_dir}/usr/local/bin/pacver"
+        fi
     fi
 
     if [[ -e "${pacstrap_dir}/root/customize_airootfs.sh" ]]; then
