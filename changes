@@ -1,18 +1,18 @@
 Snal Linux
 
 Release New Version
-	merge upstream changes into testing branch
-	update configs/releng/profiledef.sh to new version
+    merge upstream changes into testing branch
+    update configs/releng/profiledef.sh to new version
     sudo pacman -Syu
     makepkg packages in src, cp results to snalrepo
     repo-add new packages
-	build new ISO
-	test new ISO
-	upload new ISO
-	update README
-	update home wiki page
-	add version wiki page with output of pacver
-	merge new changes into master branch
+    build new ISO
+    test new ISO
+    upload new ISO
+    update README
+    update home wiki page
+    add version wiki page with output of pacver
+    merge new changes into master branch
 
 Version 1.13
     better documented release process
