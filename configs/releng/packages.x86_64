@@ -145,6 +145,7 @@ multitail
 mupdf
 nano
 nbd
+ncdu
 ndisc6
 netctl
 nethogs
@@ -179,6 +180,7 @@ rdesktop
 refind
 reflector
 reiserfsprogs
+remmina
 rofi
 rmlint
 rp-pppoe
@@ -203,7 +205,6 @@ tcpdump
 terminus-font
 testdisk
 tigervnc
-tmux
 tpm2-tss
 tty-clock-git
 udftools
