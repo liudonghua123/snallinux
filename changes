@@ -14,6 +14,10 @@ Release New Version
     add version wiki page with output of pacver
     merge new changes into master branch
 
+Version 1.15
+    merged upstream changes
+    added gruvbox to vim colorschemes
+
 Version 1.14
     added micro (text editor)
 
