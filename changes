@@ -14,6 +14,9 @@ Release New Version
     add version wiki page with output of pacver
     merge new changes into master branch
 
+Version 1.17
+    merged upstream changes
+
 Version 1.16
     merged upstream changes
 
