@@ -9,6 +9,7 @@ aria2
 arpwatch
 b43-fwcutter
 base
+<<<<<<< HEAD
 base-devel
 bash
 bash-completion
@@ -16,6 +17,7 @@ bc
 beebeep
 bind-tools
 bmon
+bind
 brltty
 broadcom-wl
 btrfs-progs
@@ -38,6 +40,7 @@ diffutils
 dillo
 discount
 dmenu
+dmidecode
 dmraid
 dnsmasq
 dos2unix
@@ -89,6 +92,7 @@ id3v2
 iftop
 imagemagick
 inetutils
+hyperv
 intel-ucode
 ipcalc
 iperf
@@ -159,6 +163,8 @@ nnn
 ntfs-3g
 ntp
 nvme-cli
+open-iscsi
+open-vm-tools
 openconnect
 openssh
 openvpn
