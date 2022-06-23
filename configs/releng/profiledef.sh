@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
-BUILD="1.18"
+BUILD="1.19"
 DATE=`date "+%B %e, %Y"`
 
 app_name="snallinux"
@@ -12,7 +12,9 @@ iso_application="Snal Linux"
 iso_version="$BUILD"
 install_dir="arch"
 buildmodes=('iso')
-bootmodes=('bios.syslinux.mbr' 'bios.syslinux.eltorito' 'uefi-x64.systemd-boot.esp' 'uefi-x64.systemd-boot.eltorito')
+bootmodes=('bios.syslinux.mbr' 'bios.syslinux.eltorito'
+           'uefi-ia32.grub.esp' 'uefi-x64.grub.esp'
+           'uefi-ia32.grub.eltorito' 'uefi-x64.grub.eltorito')
 arch="x86_64"
 pacman_conf="pacman.conf"
 airootfs_image_type="squashfs"

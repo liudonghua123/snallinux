@@ -13,6 +13,10 @@ Release New Version
     update home wiki page
     add version wiki page with output of pacver
     merge new changes into master branch
+    tag latest commit: git tag snal_x.xx xxxxxxxxxxxx -m "as used to build snal x.xx"
+
+Version 1.19
+    merged upstream changes
 
 Version 1.18
     merged upstream changes
