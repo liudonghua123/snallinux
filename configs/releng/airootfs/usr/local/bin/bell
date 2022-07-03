@@ -1,6 +1,7 @@
 #!/bin/bash
+# bell - ring terminal bell
 # a simple bash script to bell
-# written by Jeremy Wakeman
+# Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 echo -e '\a'

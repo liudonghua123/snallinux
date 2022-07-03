@@ -1,7 +1,7 @@
 #!/bin/bash
 # a simple bash script to start an xterm launcher
-# written by Jeremy Wakeman
+# Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+xterm -fa "andale" -fs 28 -rv -geometry "40x4" -T "launcher" -e "/bin/bash --rcfile ~/.bashrc.alt"
 #lxterminal -t launcher --geometry=40x6
-xterm -fa "andale" -fs 28 -rv -geometry "40x3" -T "launcher" -e "/bin/bash --rcfile ~/.bashrc.alt"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # a simple bash script output a horizontal rule 
-# written by Jeremy Wakeman
+# Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 enter=0

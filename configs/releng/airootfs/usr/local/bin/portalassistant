@@ -1,6 +1,6 @@
 #!/bin/bash
 # a simple bash script to check if you are behind a captive portal
-# written by Jeremy Wakeman
+# Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
