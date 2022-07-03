@@ -16,6 +16,8 @@ Release New Version
     tag latest commit: git tag snal_x.xx xxxxxxxxxxxx -m "as used to build snal x.xx"
 
 Version 1.19
+    updated /usr/local/bin/ scripts
+    slightly larger default font for lxterminal
     merged upstream changes
 
 Version 1.18
