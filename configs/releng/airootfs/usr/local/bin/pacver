@@ -6,7 +6,7 @@
 TEMPFILE="/tmp/pacver.temp"
 
 if [[ "$1" == "" ]] ; then
-	packages="bash firefox gcc git glibc gnupg i3-gaps linux openssh rsync screen vim xorg-server"
+	packages="PACKAGES"
 else
 	packages="$@"
 fi
