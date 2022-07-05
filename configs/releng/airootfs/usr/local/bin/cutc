@@ -1,5 +1,5 @@
 #!/bin/bash
-# a simple bash script cut columns to screen width 
+# cutc - cut input lines to match terminal width
 # Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 

@@ -1,6 +1,6 @@
 #!/bin/bash
-# a simple bash script to "ping" a port 
-# Copyright 2022 Jeremy Wakeman
+# pping - "ping" a port 
+# written by Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 loop=0
@@ -47,9 +47,7 @@ while [[ $loop -eq 1 ]] || [[ $runonce -eq 1 ]] ; do
         echo "$host is up on port $port"
     else
         echo "no response from $host on port $port"
+        exit 1
     fi
 	runonce=0
-    if [[ $loop -eq 1 ]] ; then
-        sleep 2
-    fi
 done

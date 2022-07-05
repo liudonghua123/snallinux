@@ -1,14 +1,15 @@
 #!/bin/bash
-# a simple bash script to check a server until it is up
+# tilup - ping a computer until it is up
 # Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-BELL=0
-PORT=0
-WAIT=0
+bell=0
+options=0
+port=0
+wait=0
 
 # if help is requested, show usage and options
-if [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
+if [[ "$*"" == " ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
 	exec_name=`basename $0`
 	echo "Usage: $exec_name [OPTION] <server>"
 	echo "check a server until it is up"
@@ -27,13 +28,13 @@ fi
 # if options are passed, parse them
 if [[  $1 =~ - ]] ; then
 	if [[ $1 =~ b ]] ; then
-		BELL=1
+		bell=1
 	fi
 	if [[ $1 =~ w ]] ; then
-		WAIT=1
+		wait=1
 	fi
 	if [[ $1 =~ p ]] ; then
-		PORT=$2
+		port=$2
 		shift
 	fi
 	shift
@@ -41,11 +42,11 @@ fi
 
 if [[ "$1" == "" ]] ; then
 	host="neverssl.com"
-	PORT=80
+	port=80
 	echo -n "checking if $host is up "
 	ipup=0
 	while [[ $ipup -eq 0 ]] ; do
-		nc -zw 2 $host $PORT > /dev/null 2>&1 && ipup=1
+		nc -zw 2 $host $port 2>/dev/null && ipup=1
 		echo -n ". "
 		sleep 1
 	done
@@ -58,10 +59,10 @@ else
 		echo -n "checking if $host is up "
 		ipup=0
 		while [[ $ipup -eq 0 ]] ; do
-			if [[ $PORT -eq 0 ]] ; then
-				ping -w 2 $host > /dev/null 2>&1 && ipup=1
+			if [[ $port -eq 0 ]] ; then
+				ping -w 2 $host && ipup=1
 			else
-				nc -zw 2 $host $PORT > /dev/null 2>&1 && ipup=1
+				nc -zw 2 $host $port 2>/dev/null && ipup=1
 			fi
 			echo -n ". "
 			sleep 1
@@ -71,11 +72,11 @@ else
 fi
 
 # if we should wait, wait
-if [ "$WAIT" == "1" ] ; then
+if [ "$wait" == "1" ] ; then
 	echo sleeping for 10 seconds . . .
 	sleep 10
 fi
 # if we should bell, bell
-if [ "$BELL" == "1" ] ; then
+if [ "$bell" == "1" ] ; then
 	/usr/local/bin/bell
 fi

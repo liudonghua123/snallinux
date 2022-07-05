@@ -1,5 +1,5 @@
 #!/bin/bash
-# a simple bash script to cut cols and pipe to less
+# lesc - cut cols to match terminal width and display in less
 # Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 

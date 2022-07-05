@@ -1,5 +1,5 @@
 #!/bin/bash
-# a simple bash script to run a command until it succeeds
+# tildone - run a command until it succeeds
 # Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 

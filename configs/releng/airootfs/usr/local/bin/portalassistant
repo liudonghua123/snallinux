@@ -1,5 +1,6 @@
 #!/bin/bash
-# a simple bash script to check if you are behind a captive portal
+# portalassistant - check if you are behind a captive portal
+# open a browser window to neverssl.com if you are
 # Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -24,6 +25,7 @@ if [[ $force -eq 0 ]] ; then
 fi
 
 if [[ $neverssl -eq 0 ]] || [[ $force -eq 1 ]] ; then
+    echo "opening $BROWSER"
 	exec $BROWSER &
 else
 	echo "neverssl is accessible"

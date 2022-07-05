@@ -1,15 +1,14 @@
 #!/bin/bash
-# a simple bash script to connect to a server if it is up
+# ifup - check if a computer is up; connect if it is
 # Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-BELL=0
-DOWN=0
-LOOP=0
-WAIT=0
-PORT=0
-ROOT=0
-TELNET=0
+bell=0
+wait=0
+port=0
+root=0
+telnet=0
+options=0
 
 # if help is requested, show usage and options
 if [[ "$*" == "" ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] ; then
@@ -31,88 +30,78 @@ fi
 # if options are passed, parse them
 if [[  $1 =~ - ]] ; then
 	if [[ $1 =~ b ]] ; then
-		BELL=1
+		bell=1
 	fi
 	if [[ $1 =~ w ]] ; then
-		WAIT=1
+		wait=1
 	fi
 	if [[ $1 =~ r ]] ; then
-		ROOT=1
+		root=1
 	fi
 	if [[ $1 =~ t ]] ; then
-		TELNET=1
+		telnet=1
 	fi
 	if [[ $1 =~ p ]] ; then
-		PORT=$2
+		port=$2
 		shift
 	fi
 	shift
 fi
 
 # parse address or hostname to check
-if [[ $1 =~ @ ]] ; then
-    INPUT=$1
-    HOST=`echo $1 | sed -e "s/^.*@//"`
-    shift
-else
-    INPUT=$1
-    HOST=$1
-    shift
-fi
+host=$1
+shift
 
 # if no command given, assume ssh the address or hostname
 if [ "$*" == "" ] ; then
-	if [ "$ROOT" == "1" ] ; then
-		if [ "$TELNET" == "1" ] ; then
+	if [ "$root" == "1" ] ; then
+		if [ "$telnet" == "1" ] ; then
 			echo "Error: -r option and -t option should not be used together"
 			exit 1
 		fi
-		RUN="ssh root@$HOST"
-		PORT=22
-	elif [ "$TELNET" == "1" ] ; then
-		RUN="telnet $HOST"
-		PORT=23
+		run="ssh root@$host"
+		port=22
+	elif [ "$telnet" == "1" ] ; then
+		run="telnet $host"
+		port=23
 	else
-		RUN="ssh $INPUT"
-		PORT=22
+		run="ssh $host"
+		port=22
 	fi
 else
-	if [ "$ROOT" == "1" ] ; then
+	if [ "$root" == "1" ] ; then
 		echo "Error: -r option should not be used with an explicit command"
 		exit 1
-	elif [ "$TELNET" == "1" ] ; then
+	elif [ "$telnet" == "1" ] ; then
 		echo "Error: -t option should not be used with an explicit command"
 		exit 1
 	else
-		RUN=$*
+		run=$*
 	fi
 fi
 
-IPUP=0
-NUMTRIES=0
-echo -n "Checking if $HOST is up "
-while [ $IPUP -eq 0 ] ; do
-	echo -n ". "
-	if [[ $PORT -eq 0 ]] ; then
-		ping -w 2 $HOST >/dev/null && IPUP=1
+ipup=0
+numtries=0
+while [[ $ipup -eq 0 ]] ; do
+	if [[ $port -eq 0 ]] ; then
+		ping -w 2 $host && ipup=1
 	else
-		nc -zw 2 $HOST $PORT 2>/dev/null && IPUP=1
+		nc -zw 2 $host $port 2>/dev/null && ipup=1
 	fi
 	sleep 1
-	NUMTRIES=$(($NUMTRIES+1))
-	if [[ $NUMTRIES -ge 3 ]] ; then
+	numtries=$(($numtries+1))
+	if [ "$numtries" -ge "3" ] ; then
 		echo "No response after three tries, quitting"
 		exit 1
 	fi
 done
-echo ""
 # if we should wait, wait
-if [[ $WAIT -eq 1 ]] ; then
-	echo sleeping for 10 seconds . . .
-	sleep 10
+if [ "$wait" == "1" ] ; then
+	echo sleeping for 30 seconds . . .
+	sleep 30
 fi
 # if we should bell, bell
-if [[ $BELL -eq 1 ]] ; then
-	bell
+if [ "$bell" == "1" ] ; then
+	/usr/local/bin/bell
 fi
-$RUN
+$run

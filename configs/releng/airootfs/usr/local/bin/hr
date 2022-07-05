@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-# a simple bash script output a horizontal rule 
+#!/bin/bash
+# hr - output horizontal rule that fits terminal width
 # Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 

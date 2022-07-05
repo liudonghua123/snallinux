@@ -1,5 +1,5 @@
 #!/bin/bash
-# a simple bash script to head lines on screen
+# headl - show only lines that will fit in terminal height
 # Copyright 2022 Jeremy Wakeman
 # SPDX-License-Identifier: GPL-3.0-or-later
 

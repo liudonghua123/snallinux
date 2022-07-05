@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
-# This script was made by `goferito` on Github.
-# Some cleanup by Luke.
+# i3resize - interact with i3 window manager to resize windows
+# Copyright 2022 Jeremy Wakeman
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Inspired by 'goferito' and 'Luke'.
 
 [ -z "$1" ] && echo "No direction provided" && exit 1
 distanceStr="2 px or 2 ppt"
