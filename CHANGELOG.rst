@@ -8,13 +8,28 @@ Changelog
 Added
 -----
 
-- Add ``efibootimg`` to ``mkarchiso`` to abstract the FAT image path.
-
 Changed
 -------
 
 Removed
 -------
+
+[66] - 2022-08-28
+=================
+
+Added
+-----
+
+- Add ``efibootimg`` to ``mkarchiso`` to abstract the FAT image path.
+- Unset ``LANGUAGE`` since ``LC_ALL=C.UTF-8``, unlike ``LC_ALL=C``, does not override ``LANGUAGE``.
+- Copy all files from the ``grub`` directory to ISO9660 and the FAT image, not just only ``grub.cfg``.
+- Touching ``/usr/lib/clock-epoch`` to to help ``systemd`` with screwed or broken RTC.
+
+Changed
+-------
+
+- Disable GRUB's shim_lock verifier and preload more modules. This allows reusing the GRUB EFI binaries when repacking
+  the ISO to support Secure Boot with custom signatures.
 
 [65] - 2022-06-30
 =================
