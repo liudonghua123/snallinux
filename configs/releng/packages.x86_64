@@ -13,7 +13,6 @@ base-devel
 bash
 bash-completion
 bc
-beebeep
 bind-tools
 bmon
 bind
@@ -42,6 +41,8 @@ dmenu
 dmidecode
 dmraid
 dnsmasq
+docker
+docker-compose
 dos2unix
 dosbox
 dosfstools
@@ -50,10 +51,7 @@ e2fsprogs
 edk2-shell
 efibootmgr
 elinks
-etherape
 ethtool
-ettercap
-ettercap-gtk
 exfat-utils
 exfatprogs
 f2fs-tools
@@ -78,7 +76,6 @@ gptfdisk
 grep
 grml-zsh-config
 gzip
-hashcat
 haveged
 grub
 hdparm
@@ -105,8 +102,6 @@ irssi
 iw
 iwd
 jfsutils
-john
-kismet
 lastpass-cli
 less
 lftp
@@ -130,7 +125,6 @@ man-pages
 mc
 mdadm
 memtest86+
-metasploit
 micro
 midori
 mkinitcpio
@@ -232,7 +226,6 @@ whois
 wipe
 wireless-regdb
 wireless_tools
-wireshark-cli
 wpa_supplicant
 wvdial
 xautolock
