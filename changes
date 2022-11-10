@@ -15,6 +15,9 @@ Release New Version
     merge new changes into master branch
     tag latest commit: git tag -a snal_x.xx xxxxxxxxxxxx -m "as used to build snal x.xx"
 
+Version 1.22
+    merged upstream changes
+
 Version 1.21
     merged upstream changes
     removed a few pentesting/cracking packages
