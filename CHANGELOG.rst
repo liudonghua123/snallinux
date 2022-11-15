@@ -14,6 +14,17 @@ Changed
 Removed
 -------
 
+[68] - 2022-10-30
+=================
+
+Changed
+-------
+
+- Do not explicitly enable ``qemu-guest-agent.service`` as it will be started by a udev rule.
+- Remove existing signature (``.sig``) files and do not sign them when signing netboot artifacts. This is mostly
+  applicable when re-running ``mkarchiso``  after a failure.
+- Replace ``archiso_kms`` with ``kms`` in ``mkinitcpio.conf``. The hook is available in mkinitcpio since version 32.
+
 [67] - 2022-09-25
 =================
 
@@ -69,6 +80,8 @@ Removed
 
 - Remove the custom pacman hook that ran ``locale-gen`` on glibc install from the releng profile. The used locale now
   ships with the glibc package itself.
+- Remove "Copy to RAM" boot entries since the ``archiso`` mkinitcpio hook enables it automatically when there is enough
+  free RAM.
 
 [64] - 2022-05-30
 =================
