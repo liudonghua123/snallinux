@@ -15,6 +15,11 @@ Release New Version
     merge new changes into master branch
     tag latest commit: git tag snal_x.xx xxxxxxxxxxxx -m "as used to build snal x.xx"
 
+Version 1.24
+    added some modern alternatives: bat, bottom, exa, dust, and procs
+    added some useful utilities: task, xkcdpass and yay
+    updated bash configs to alias cat to bat and ls to exa
+
 Version 1.23
     merged upstream changes
 

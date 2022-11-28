@@ -6,7 +6,7 @@
 TEMPFILE="/tmp/pacver.temp"
 
 if [[ "$1" == "" ]] ; then
-	packages="PACKAGES"
+	packages="XXPACKAGESXX"
 else
 	packages="$@"
 fi

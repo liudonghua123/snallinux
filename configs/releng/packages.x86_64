@@ -12,10 +12,12 @@ base
 base-devel
 bash
 bash-completion
+bat
 bc
 bind-tools
 bmon
 bind
+bottom
 brltty
 broadcom-wl
 btrfs-progs
@@ -47,11 +49,13 @@ dos2unix
 dosbox
 dosfstools
 dstat
+dust
 e2fsprogs
 edk2-shell
 efibootmgr
 elinks
 ethtool
+exa
 exfat-utils
 exfatprogs
 f2fs-tools
@@ -170,6 +174,7 @@ perl-math-round
 pkgfile
 ppp
 pptpclient
+procs
 pv
 qemu-guest-agent
 qiv
@@ -184,6 +189,7 @@ rofi
 rmlint
 rp-pppoe
 rsync
+rtorrent
 rustup
 screen
 screenfetch
@@ -200,6 +206,7 @@ sxiv
 syslinux
 sysstat
 systemd-resolvconf
+task
 tcpdump
 terminus-font
 testdisk
@@ -228,6 +235,7 @@ wpa_supplicant
 wvdial
 xautolock
 xfsprogs
+xkcdpass
 xl2tpd
 xorg-drivers
 xorg-fonts
@@ -248,5 +256,6 @@ xorg-xwininfo
 xscreensaver
 xsel
 xterm
+yay
 zip
 zsh

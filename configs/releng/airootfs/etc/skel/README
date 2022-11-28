@@ -58,4 +58,4 @@ More information about netctl is available in 'man netctl' at <https://wiki.arch
 
 
 Installing
-Since Snal is built using the Archiso scripts, you can install Arch from a running Snal. This is not recommended as Snal is not supported by the Arch community, but the Arch installation file is located at /root/install.txt.
+Since Snal is built using the Archiso scripts, you can install Arch from a running Snal. This is not recommended as Snal is not supported by the Arch community, but the Arch installation script is included.
