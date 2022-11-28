@@ -28,10 +28,9 @@ export HISTFILESIZE=10000
 export HISTIGNORE="&:bg:fg:la:ll:lla:llp:llap:ls:exit:exit *:h"
 export HISTSIZE=10000
 export MAILCHECK=1
-export QT_QPA_PLATFORMTHEME="qt5ct"
 export TERM
 
-export PATH="~/.bin:/bin:/usr/bin:/usr/bin/core_perl:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
+export PATH="~/.bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin"
 #export PS1="\[$NC\]\u@\h(\[$RED\]\W\[$NC\])\\$ "
 export PS1='$( code="$?" ; if [ "$code" -ne "0" ] ; then echo -n "\[$red\]$code " ; fi)$( echo -n \[$NC\] )\u@\h($( echo -n \[$RED\] )\W$( echo -n \[$NC\] ))\$$( echo -n \[$NC\] ) '
 
@@ -40,28 +39,42 @@ stty erase 
 # define alias's
 alias du='du -kh'
 alias df='df -kTh'
-alias l='less'
 alias g='grep'
+alias l='less -R'
 alias more='less'
 alias psg='ps -ef | grep -v grep | grep '
+alias vim='vim -u ~/.vimrc'
 
-# ls alias's
+use_bat=`which bat 2>/dev/null || which batcat 2>/dev/null || echo /dev/null`
+use_exa=`which exa 2>/dev/null || echo /dev/null`
 
-alias la='ls -hFpA --color=auto '
-alias lag='ls -hFpA | grep '
-alias lam='ls -hFpA | less '
-alias lg='ls -hFp | grep '
-alias ll='ls -hFpl --color=auto '
-alias lla='ls -hFplA --color=auto '
-alias llag='ls -hFplA | grep '
-alias llam='ls -hFplA | less '
-alias llg='ls -hFpl | grep '
-alias llm='ls -hFpl | less '
-alias lm='ls -hFp | less '
-alias ls='ls -hFp --color=auto '
-
-# ACSES aliases
-alias liless='grep --color=ALWAYS -E "Hailing|LINK|b84[12]|b88[1234]|b90[1234567]|7[a1-9]{11}a1|2[a1-9]{7}a1|1[a1-9]{7}73||b30323|3a00000000111|RSSI: -[0-9]{2,3}|$" | less -R'
+# use these alternatives if they exist
+if [ -x $use_bat ] ; then
+    #echo "aliasing cat to $use_bat"
+    alias cat=$use_bat
+else
+    unalias cat 2>/dev/null
+fi
+if [ -x $use_exa ] ; then
+    #echo "aliasing ls to $use_exa"
+    alias ls="$use_exa"
+    alias la="$use_exa -a"
+    alias lag="$use_exa -a | grep"
+    alias lg="$use_exa | grep"
+    alias ll="$use_exa -l --git"
+    alias lla="$use_exa -la --git"
+    alias llag="$use_exa -la --git | grep "
+    alias llg="$use_exa -l --git | grep "
+else
+    alias ls='ls -hFp --color=auto '
+    alias la='ls -hFpA --color=auto '
+    alias lag='ls -hFpA | grep '
+    alias lg='ls -hFp | grep '
+    alias ll='ls -hFpl --color=auto '
+    alias lla='ls -hFplA --color=auto '
+    alias llag='ls -hFplA | grep '
+    alias llg='ls -hFpl | grep '
+fi
 
 
 # enable programmable completion features (you don't need to enable

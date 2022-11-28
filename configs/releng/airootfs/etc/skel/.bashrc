@@ -39,25 +39,43 @@ stty erase 
 # define alias's
 alias du='du -kh'
 alias df='df -kTh'
-alias l='less'
 alias g='grep'
+alias l='less -R'
 alias more='less'
 alias psg='ps -ef | grep -v grep | grep '
+alias vim='vim -u ~/.vimrc'
 
-# ls alias's
+use_bat=`which bat 2>/dev/null || which batcat 2>/dev/null || echo /dev/null`
+use_exa=`which exa 2>/dev/null || echo /dev/null`
 
-alias la='ls -hFpA --color=auto '
-alias lag='ls -hFpA | grep '
-alias lam='ls -hFpA | less '
-alias lg='ls -hFp | grep '
-alias ll='ls -hFpl --color=auto '
-alias lla='ls -hFplA --color=auto '
-alias llag='ls -hFplA | grep '
-alias llam='ls -hFplA | less '
-alias llg='ls -hFpl | grep '
-alias llm='ls -hFpl | less '
-alias lm='ls -hFp | less '
-alias ls='ls -hFp --color=auto '
+# use these alternatives if they exist
+if [ -x $use_bat ] ; then
+    #echo "aliasing cat to $use_bat"
+    alias cat=$use_bat
+else
+    unalias cat 2>/dev/null
+fi
+if [ -x $use_exa ] ; then
+    #echo "aliasing ls to $use_exa"
+    alias ls="$use_exa"
+    alias la="$use_exa -a"
+    alias lag="$use_exa -a | grep"
+    alias lg="$use_exa | grep"
+    alias ll="$use_exa -l --git"
+    alias lla="$use_exa -la --git"
+    alias llag="$use_exa -la --git | grep "
+    alias llg="$use_exa -l --git | grep "
+else
+    alias ls='ls -hFp --color=auto '
+    alias la='ls -hFpA --color=auto '
+    alias lag='ls -hFpA | grep '
+    alias lg='ls -hFp | grep '
+    alias ll='ls -hFpl --color=auto '
+    alias lla='ls -hFplA --color=auto '
+    alias llag='ls -hFplA | grep '
+    alias llg='ls -hFpl | grep '
+fi
+
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -72,57 +90,29 @@ fi
 
 # start screen if interactive
 if [[ $- == *i* ]] ; then
-    # cwmwl and amddim do not have X installed
-    if [[ `hostname` == "cwmwl" ]] || [[ `hostname` == "amddim" ]] ; then
-    	if [[ "$TERM" == "linux" ]] ; then
-    		echo -n "run screen [Y/n/x]? "
-    		read x
-    		if [ "$x" == "x" ] ; then
-    			screen -x main || screen -S main
-    			exit
-    		elif [ "$x" != "n" ] ; then
-    			screen -raAd main || screen -S main
-    			exit
-    		fi
-    	elif [[ "$TERM" =~ "screen" ]] ; then
-    		echo "already in screen" >> /dev/null
-    	elif [[ "$TERM" =~ "xterm" ]] ; then
-    		echo -n "run screen [Y/n/x]? "
-    		read x
-    		if [ "$x" == "x" ] ; then
-    			screen -x main || screen -S main
-    			exit
-    		elif [ "$x" != "n" ] ; then
-    			screen -raAd main || screen -S main
-    			exit
-    		fi
-    	fi
-    else
-    	# other hosts run startx in linux term
-    	if [[ "$TERM" == "linux" ]] ; then
-    		echo -n "run startx [Y/n/s/x]? "
-    		read x
-    		if [ "$x" == "s" ] ; then
-    			screen -raAd main || screen -S main
-    			exit
-    		elif [ "$x" == "x" ] ; then
-    			screen -x main || screen -S main
-    			exit
-    		elif [ "$x" != "n" ] ; then
-    			startx
-    		fi
-    	elif [[ "$TERM" =~ "screen" ]] ; then
-    		echo "already in screen" >> /dev/null
-    	elif [[ "$TERM" =~ "xterm" ]] ; then
-    		echo -n "run screen [Y/n/x]? "
-    		read x
-    		if [ "$x" == "x" ] ; then
-    			screen -x main || screen -S main
-    			exit
-    		elif [ "$x" != "n" ] ; then
-    			screen -raAd main || screen -S main
-    			exit
-    		fi
-    	fi
+    if [[ "$TERM" == "linux" ]] ; then
+        echo -n "run startx [Y/n/s/x]? "
+        read x
+        if [ "$x" == "s" ] ; then
+            screen -raAd main || screen -S main
+            exit
+        elif [ "$x" == "x" ] ; then
+            screen -x main || screen -S main
+            exit
+        elif [ "$x" != "n" ] ; then
+            startx
+        fi
+    elif [[ "$TERM" =~ "screen" ]] ; then
+        echo "already in screen" >> /dev/null
+    elif [[ "$TERM" =~ "xterm" ]] ; then
+        echo -n "run screen [Y/n/x]? "
+        read x
+        if [ "$x" == "x" ] ; then
+            screen -x main || screen -S main
+            exit
+        elif [ "$x" != "n" ] ; then
+            screen -raAd main || screen -S main
+            exit
+        fi
     fi
 fi

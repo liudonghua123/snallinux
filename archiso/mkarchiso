@@ -432,7 +432,7 @@ _make_customize_airootfs() {
         # modify sudoers
         if [[ -e "${pacstrap_dir}/etc/sudoers" ]] ; then
             _msg_info "Modifying /etc/sudoers..."
-            sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' "${pacstrap_dir}/etc/sudoers"
+            sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' "${pacstrap_dir}/etc/sudoers"
         fi
         # modify pacman.conf
         if [[ -e "${pacstrap_dir}/etc/pacman.conf" ]] ; then
@@ -445,21 +445,28 @@ _make_customize_airootfs() {
             reflector > "${pacstrap_dir}/etc/pacman.d/mirrorlist"
         fi
         # modify os-release 
-        if [[ -e "${pacstrap_dir}/etc/skel/README" ]] ; then
+        if [[ -e "${pacstrap_dir}/etc/os-release" ]] ; then
             _msg_info "Adding version and date to /etc/os-release..."
             sed -i -e "s/XXVERXX/$BUILD/g" -e "s/XXDATEXX/$DATE/g" "${pacstrap_dir}/etc/os-release"
         fi
+        # modify lsb-release 
+        if [[ -e "${pacstrap_dir}/etc/lsb-release" ]] ; then
+            _msg_info "Adding snal info to /etc/lsb-release..."
+            echo DISTRIB_ID=\"Snal\" > ${pacstrap_dir}/etc/lsb-release
+            echo DISTRIB_RELEASE=\"$BUILD\" >> ${pacstrap_dir}/etc/lsb-release
+            echo DISTRIB_DESCRIPTION=\"Snal Linux\" >> ${pacstrap_dir}/etc/lsb-release
+        fi
         # add snal-release
-        if [[ -e "${pacstrap_dir}/etc/skel/README" ]] ; then
+        if [[ -e "${pacstrap_dir}/etc" ]] ; then
             _msg_info "Adding version $BUILD to /etc/snal-release..."
             echo $BUILD > "${pacstrap_dir}/etc/snal-release"
         fi
         # modify /usr/local/bin/pacver
         if [[ -e "${pacstrap_dir}/usr/local/bin/pacver" ]] && [[ -e "${packages}" ]] ; then
             _msg_info "Creating package list"
-            cat ${packages} | tr '\n' ' ' | sed -e "s/^/   packages=\"/" -e "s/ $/\"\n/" >> /tmp/packages.txt
+            cat ${packages} | tr '\n' ' ' | sed -e "s/^/   packages=\"/" -e "s/ $/\"\n/" > /tmp/packages.txt
             _msg_info "Adding packages to /usr/local/bin/pacver"
-            sed -i -e '/PACKAGES/{r /tmp/packages.txt' -e 'd}' "${pacstrap_dir}/usr/local/bin/pacver"
+            sed -i -e '/XXPACKAGESXX/{r /tmp/packages.txt' -e 'd}' "${pacstrap_dir}/usr/local/bin/pacver"
         fi
     fi
 
