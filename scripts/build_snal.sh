@@ -38,20 +38,20 @@ fi
 USB=""
 found_usb=0
 for DEV in /sys/block/sd* ; do
-    udevadm info --no-pager $DEV | grep -q "^P:.*usb"
+    udevadm info $DEV | grep -q "^P:.*usb"
     test_usb=$?
     if [[ $test_usb -eq 0 ]] ; then
         found_usb=$((found_usb+1))
-        vendor=$(udevadm info --no-pager $DEV | grep "^E: ID_USB_VENDOR=" | sed -e "s/E: ID_USB_VENDOR=//")
+        vendor=$(udevadm info $DEV | grep "^E: ID_USB_VENDOR=" | sed -e "s/E: ID_USB_VENDOR=//")
         cd $DEV
         NAME=$(basename $DEV)
         USB="/dev/$NAME"
         if [ -d ${NAME}1 ] ; then
             echo "found /dev/$NAME $vendor USB with partitions"
             for PART in ${NAME}[0-9]* ; do
-                filesystem=$(udevadm info --no-pager $PART | grep "^E: ID_FS_TYPE=" | sed -e "s/E: ID_FS_TYPE=//")
-                label=$(udevadm info --no-pager $PART | grep "^E: ID_FS_LABEL=" | sed -e "s/E: ID_FS_LABEL=//")
-                size=$(udevadm info --no-pager $PART | grep "^E: ID_PART_ENTRY_SIZE=" | sed -e "s/E: ID_PART_ENTRY_SIZE=//" | numfmt --format="%5.2f" --to=iec)
+                filesystem=$(udevadm info $PART | grep "^E: ID_FS_TYPE=" | sed -e "s/E: ID_FS_TYPE=//")
+                label=$(udevadm info $PART | grep "^E: ID_FS_LABEL=" | sed -e "s/E: ID_FS_LABEL=//")
+                size=$(udevadm info $PART | grep "^E: ID_PART_ENTRY_SIZE=" | sed -e "s/E: ID_PART_ENTRY_SIZE=//" | numfmt --format="%5.2f" --to=iec)
                 echo -n "     "
                 printf %4s $PART
                 printf %16s $label
